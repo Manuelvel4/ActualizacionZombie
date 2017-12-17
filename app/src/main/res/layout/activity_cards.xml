@@ -20,19 +20,20 @@
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="Aceptar"
         android:text="Aceptar"
-        android:layout_alignBaseline="@+id/button8"
-        android:layout_alignBottom="@+id/button8"
+        android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/button8" />
 
     <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp" />
+        android:layout_marginStart="12dp"
+        android:onClick="Cancelar"
+        android:text="Cancelar" />
 
     <Button
         android:id="@+id/button3"

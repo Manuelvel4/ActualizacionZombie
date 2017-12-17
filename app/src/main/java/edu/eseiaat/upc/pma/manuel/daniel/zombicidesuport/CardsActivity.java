@@ -1,6 +1,7 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 public class CardsActivity extends AppCompatActivity {
-    public static String Keycarta1="key_carta1";
+    public static String Keycartas="key_cartas";
+    public static int pasarcartas=1;
 
     private ArrayList<Cartas> listacartas;
     private CartasAdapter adaptercartas;
@@ -21,7 +23,9 @@ public class CardsActivity extends AppCompatActivity {
     private LinearLayoutManager linlayoutmanager;
     private ImageView carta1,carta2,carta3,carta4,carta5;
     private Drawable cartaselect;
+    private String nombrecartaselect;
     private int idcarta;
+    private String[] cartasPersonaje;
 
 
     @Override
@@ -36,11 +40,15 @@ public class CardsActivity extends AppCompatActivity {
         adaptercartas =new CartasAdapter(this,listacartas);
         viewCartas.setAdapter(adaptercartas);
 
+
         carta1=(ImageView)findViewById(R.id.Carta1);
         carta2=(ImageView)findViewById(R.id.Carta2);
         carta3=(ImageView)findViewById(R.id.Carta3);
         carta4=(ImageView)findViewById(R.id.Carta4);
         carta5=(ImageView)findViewById(R.id.Carta5);
+        cartasPersonaje=new String[5];
+        cartasPersonaje=getIntent().getStringArrayExtra(Keycartas);
+        CrearCartas();
 
         adaptercartas.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -60,6 +68,7 @@ public class CardsActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
                         Seleccionar();
                         carta1.setImageDrawable(cartaselect);
+                        cartasPersonaje[0]=nombrecartaselect;
                         break;
                     default:
                         break;
@@ -74,6 +83,7 @@ public class CardsActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
                         Seleccionar();
                         carta2.setImageDrawable(cartaselect);
+                        cartasPersonaje[1]=nombrecartaselect;
                         break;
                     default:
                         break;
@@ -88,6 +98,7 @@ public class CardsActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
                         Seleccionar();
                         carta3.setImageDrawable(cartaselect);
+                        cartasPersonaje[2]=nombrecartaselect;
                         break;
                     default:
                         break;
@@ -102,6 +113,7 @@ public class CardsActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
                         Seleccionar();
                         carta4.setImageDrawable(cartaselect);
+                        cartasPersonaje[3]=nombrecartaselect;
                         break;
                     default:
                         break;
@@ -116,6 +128,7 @@ public class CardsActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
                         Seleccionar();
                         carta5.setImageDrawable(cartaselect);
+                        cartasPersonaje[4]=nombrecartaselect;
                         break;
                     default:
                         break;
@@ -129,11 +142,32 @@ public class CardsActivity extends AppCompatActivity {
         icono.setImageDrawable(getDrawable(R.drawable.calavera));*/
     }
 
+    private void CrearCartas() {
+        for (int i=0;i<listacartas.size();i++){
+            Cartas c=listacartas.get(i);
+            if (c.getNombre().equals(cartasPersonaje[0])){
+                carta1.setImageDrawable(c.getCarta());
+            }
+            if (c.getNombre().equals(cartasPersonaje[1])){
+                carta2.setImageDrawable(c.getCarta());
+            }
+            if (c.getNombre().equals(cartasPersonaje[2])){
+                carta3.setImageDrawable(c.getCarta());
+            }
+            if (c.getNombre().equals(cartasPersonaje[3])){
+                carta4.setImageDrawable(c.getCarta());
+            }
+            if (c.getNombre().equals(cartasPersonaje[4])){
+                carta5.setImageDrawable(c.getCarta());
+            }
+        }
+    }
     private void Seleccionar() {
         Cartas c=listacartas.get(idcarta);
         cartaselect=c.getCarta();
-    }
+        nombrecartaselect=c.getNombre();
 
+    }
     private void Crear() {
         OtrosCartas();
         EspecialesCartas();
@@ -150,7 +184,6 @@ public class CardsActivity extends AppCompatActivity {
         listacartas.add(new Cartas(getDrawable(R.drawable.cshotgun),"cshotgun"));
         listacartas.add(new Cartas(getDrawable(R.drawable.csubmg),"csubmg"));
     }
-
     private void CuerpoCartas() {
         listacartas.add(new Cartas(getDrawable(R.drawable.cbaseballbat),"cbaseballbat"));
         listacartas.add(new Cartas(getDrawable(R.drawable.cchainsaw),"cchainsaw"));
@@ -161,7 +194,6 @@ public class CardsActivity extends AppCompatActivity {
         listacartas.add(new Cartas(getDrawable(R.drawable.cpan),"cpan"));
         listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
     }
-
     private void EspecialesCartas() {
         listacartas.add(new Cartas(getDrawable(R.drawable.cgoaliemask),"cgoaliemask"));
         listacartas.add(new Cartas(getDrawable(R.drawable.cflashlight),"cflashlight"));
@@ -170,7 +202,6 @@ public class CardsActivity extends AppCompatActivity {
         listacartas.add(new Cartas(getDrawable(R.drawable.cscope),"cscope"));
         listacartas.add(new Cartas(getDrawable(R.drawable.cmolotov),"cmolotov"));
     }
-
     private void OtrosCartas() {
         listacartas.add(new Cartas(getDrawable(R.drawable.cbagofrice),"cbagofrice"));
         listacartas.add(new Cartas(getDrawable(R.drawable.ccannedfood),"ccannedfood"));
@@ -187,32 +218,38 @@ public class CardsActivity extends AppCompatActivity {
         adaptercartas.notifyDataSetChanged();
         viewCartas.smoothScrollToPosition(0);
     }
-
     public void Distancia(View view) {
         listacartas.clear();
         DistanciaCartas();
         adaptercartas.notifyDataSetChanged();
         viewCartas.smoothScrollToPosition(0);
     }
-
     public void Cuerpo(View view) {
         listacartas.clear();
         CuerpoCartas();
         adaptercartas.notifyDataSetChanged();
         viewCartas.smoothScrollToPosition(0);
     }
-
     public void Especiales(View view) {
         listacartas.clear();
         EspecialesCartas();
         adaptercartas.notifyDataSetChanged();
         viewCartas.smoothScrollToPosition(0);
     }
-
     public void Otros(View view) {
         listacartas.clear();
         OtrosCartas();
         adaptercartas.notifyDataSetChanged();
         viewCartas.smoothScrollToPosition(0);
+    }
+
+    public void Aceptar(View view) {
+        Intent data=new Intent();
+        data.putExtra(JuegoActivity.KeyCartasSeleccionadas,cartasPersonaje);
+        setResult(RESULT_OK,data);
+        finish();
+    }
+
+    public void Cancelar(View view) {
     }
 }

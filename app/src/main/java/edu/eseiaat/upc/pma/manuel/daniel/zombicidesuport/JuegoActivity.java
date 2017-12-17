@@ -21,12 +21,14 @@ public class JuegoActivity extends AppCompatActivity {
 
 
     public static String KeyListaPersonajes="key_listaPersonajes";
+    public static String KeyCartasSeleccionadas="key_cartasSeleccionadas";
     private int[] union;
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
     private ImageView foto;
     private ArrayList<Personaje> listaPersonajes;
     private ArrayList<Personaje> listaPersonajeszombie;
     private ArrayList<Personaje> listaPersonajesSelec;
+    private ArrayList<Cartas> listacartas;
     private RecyclerView viewPersonajes;
     private LinearLayoutManager linlayoutmanager;
     private PersonajesAdapter adapterPersonajes;
@@ -59,7 +61,12 @@ public class JuegoActivity extends AppCompatActivity {
         listaPersonajes=new ArrayList<>();
         listaPersonajeszombie=new ArrayList<>();
         listaPersonajesSelec=new ArrayList<>();
+        listacartas=new ArrayList<>();
 
+        OtrosCartas();
+        EspecialesCartas();
+        CuerpoCartas();
+        DistanciaCartas();
         CrearPersonajes();
         CrearPersonajesZombies();
         ListaPersonajesSelec();
@@ -330,15 +337,43 @@ public class JuegoActivity extends AppCompatActivity {
         carta1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(JuegoActivity.this,CardsActivity.class);
-                Personaje p=listaPersonajesSelec.get(idPersonaje);
-                //int a =carta1.getTag();
-                //intent.putExtra(CardsActivity.Keycarta1,a);
-                startActivity(intent);
+                SeleccionarCarta();
+            }
+        });
+        carta2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeleccionarCarta();
+            }
+        });
+        carta3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeleccionarCarta();
+            }
+        });
+        carta4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeleccionarCarta();
+            }
+        });
+        carta5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeleccionarCarta();
             }
         });
 
 
+    }
+
+    private void SeleccionarCarta() {
+        Intent intent=new Intent(JuegoActivity.this,CardsActivity.class);
+        Personaje p=listaPersonajesSelec.get(idPersonaje);
+        String[] pasocartas=p.getCartas();
+        intent.putExtra(CardsActivity.Keycartas,pasocartas);
+        startActivityForResult(intent,CardsActivity.pasarcartas);
     }
 
     private void CambioModo() {
@@ -351,7 +386,6 @@ public class JuegoActivity extends AppCompatActivity {
         r.carta5=p.carta5;
         r.level=p.level;
     }
-
     private void ResetDrop() {
         for (int i=0;i<drop.length;i++){
             drop[i]=false;
@@ -365,10 +399,16 @@ public class JuegoActivity extends AppCompatActivity {
             p.carta3=getDrawable(R.drawable.cartamano);
             p.carta4=getDrawable(R.drawable.cartamano);
             p.carta5=getDrawable(R.drawable.cartamano);
+            String[] inicial=new String[5];
+            for (int t=0;t<5;t++){
+                inicial[t]="cartamano";
+            }
 
             if (p.getNombre()=="watts"){
                 p.carta1=getDrawable(R.drawable.cbaseballbat);
+                inicial[0]="cbaseballbat";
             }
+            p.setCartas(inicial);
 
         }
     }
@@ -569,6 +609,72 @@ public class JuegoActivity extends AppCompatActivity {
         foto=getDrawable(R.drawable.pkimzombie);
         cara=getDrawable(R.drawable.pkimcarazombie);
         listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
+
+    }
+
+    private void DistanciaCartas() {
+        listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.ceviltwins),"ceviltwins"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cpistol),"cpistol"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.crifle),"crifle"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.csawedoff),"csawedoff"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cshotgun),"cshotgun"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.csubmg),"csubmg"));
+    }
+    private void CuerpoCartas() {
+        listacartas.add(new Cartas(getDrawable(R.drawable.cbaseballbat),"cbaseballbat"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cchainsaw),"cchainsaw"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.ccrowbar),"ccrowbar"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cfireaxe),"cfireaxe"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.ckatana),"ckatana"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cmachete),"cmachete"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cpan),"cpan"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
+    }
+    private void EspecialesCartas() {
+        listacartas.add(new Cartas(getDrawable(R.drawable.cgoaliemask),"cgoaliemask"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cflashlight),"cflashlight"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cplentyofammo),"cplentyofammo"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cplentyofammoshotgun),"cplentyofammoshotgun"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cscope),"cscope"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cmolotov),"cmolotov"));
+    }
+    private void OtrosCartas() {
+        listacartas.add(new Cartas(getDrawable(R.drawable.cbagofrice),"cbagofrice"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.ccannedfood),"ccannedfood"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cwater),"cwater"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cgasoline),"cgasoline"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cglassbottle),"cglassbottle"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cwound),"cwound"));
+        listacartas.add(new Cartas(getDrawable(R.drawable.cartamano),"cartamano"));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==CardsActivity.pasarcartas){
+            if (resultCode==RESULT_OK){
+                String[] cartasPasadas=data.getExtras().getStringArray(KeyCartasSeleccionadas);
+                for (int i=0;i<listacartas.size();i++){
+                    Cartas c=listacartas.get(i);
+                    if (c.getNombre().equals(cartasPasadas[0])){
+                        carta1.setImageDrawable(c.getCarta());
+                    }
+                    if (c.getNombre().equals(cartasPasadas[1])){
+                        carta2.setImageDrawable(c.getCarta());
+                    }
+                    if (c.getNombre().equals(cartasPasadas[2])){
+                        carta3.setImageDrawable(c.getCarta());
+                    }
+                    if (c.getNombre().equals(cartasPasadas[3])){
+                        carta4.setImageDrawable(c.getCarta());
+                    }
+                    if (c.getNombre().equals(cartasPasadas[4])){
+                        carta5.setImageDrawable(c.getCarta());
+                    }
+                }
+            }
+        }
 
     }
 }
