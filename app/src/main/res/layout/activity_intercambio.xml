@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button10"
-        android:layout_toStartOf="@+id/imageView15"
+        android:layout_toStartOf="@+id/carta21"
         android:text="Cancelar" />
 
     <Button
@@ -21,105 +21,105 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:text="Aceptar"
-        android:layout_below="@+id/textView10"
+        android:layout_below="@+id/nombre1"
         android:layout_alignStart="@+id/button11" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/carta11"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/textView10"
+        android:layout_below="@+id/nombre1"
         android:layout_alignParentStart="true"
         android:layout_marginStart="38dp" />
 
     <ImageView
-        android:id="@+id/imageView15"
+        android:id="@+id/carta21"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/textView11"
-        android:layout_alignStart="@+id/textView11" />
+        android:layout_below="@+id/nombre2"
+        android:layout_alignStart="@+id/nombre2" />
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/carta22"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/textView11"
-        android:layout_toEndOf="@+id/imageView15" />
+        android:layout_below="@+id/nombre2"
+        android:layout_toEndOf="@+id/carta21" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/carta13"
         android:layout_width="80dp"
         android:layout_height="120dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
         android:layout_marginStart="15dp"
-        android:layout_below="@+id/imageView10"
+        android:layout_below="@+id/carta11"
         android:layout_alignParentStart="true" />
 
     <ImageView
-        android:id="@+id/imageView20"
+        android:id="@+id/carta25"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/carta22"
+        android:layout_toEndOf="@+id/carta24"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/rifle" />
+
+    <ImageView
+        android:id="@+id/carta23"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="43dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/rifle"
+        android:layout_below="@+id/carta21"
+        android:layout_toStartOf="@+id/carta22" />
+
+    <ImageView
+        android:id="@+id/carta24"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="58dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/rifle"
+        android:layout_below="@+id/carta21"
+        android:layout_alignStart="@+id/carta21" />
+
+    <ImageView
+        android:id="@+id/carta14"
         android:layout_width="80dp"
         android:layout_height="120dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/imageView16"
-        android:layout_toEndOf="@+id/imageView19" />
+        android:layout_below="@+id/carta11"
+        android:layout_toEndOf="@+id/carta13" />
 
     <ImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/carta15"
         android:layout_width="80dp"
         android:layout_height="120dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/imageView15"
-        android:layout_toStartOf="@+id/imageView16"
-        android:layout_marginEnd="43dp" />
+        android:layout_below="@+id/carta12"
+        android:layout_toEndOf="@+id/carta14" />
 
     <ImageView
-        android:id="@+id/imageView19"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="57dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/imageView15"
-        android:layout_alignStart="@+id/imageView15" />
-
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/imageView10"
-        android:layout_toEndOf="@+id/imageView12" />
-
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/rifle"
-        android:layout_below="@+id/imageView11"
-        android:layout_toEndOf="@+id/imageView13" />
-
-    <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/carta12"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/rifle"
-        android:layout_alignTop="@+id/imageView10"
-        android:layout_toEndOf="@+id/imageView10" />
+        android:layout_below="@+id/nombre1"
+        android:layout_toEndOf="@+id/carta11" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/nombre1"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="17dp"
@@ -129,10 +129,10 @@
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/imageView14" />
+        android:layout_alignEnd="@+id/carta15" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/nombre2"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:background="@drawable/tabla"
@@ -140,8 +140,8 @@
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="30sp"
-        android:layout_alignBaseline="@+id/textView10"
-        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignBaseline="@+id/nombre1"
+        android:layout_alignBottom="@+id/nombre1"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="55dp" />
 </RelativeLayout>

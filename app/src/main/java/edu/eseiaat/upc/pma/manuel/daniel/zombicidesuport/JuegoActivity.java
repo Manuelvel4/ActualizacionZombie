@@ -33,10 +33,11 @@ public class JuegoActivity extends AppCompatActivity {
     private RecyclerView viewPersonajes;
     private LinearLayoutManager linlayoutmanager;
     private PersonajesAdapter adapterPersonajes;
-    private int idPersonaje;
+    private int idPersonaje,idPersonajeInt;
     private ImageView carta1,carta2,carta3,carta4,carta5;
     private boolean[] drop;
     private Switch modozombie;
+    private boolean intercambiar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +89,25 @@ public class JuegoActivity extends AppCompatActivity {
         adapterPersonajes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                idPersonaje=viewPersonajes.getChildAdapterPosition(view);
-                PersonajeSelec();
+                if (intercambiar){
+                    intercambiar=false;
+                    idPersonajeInt=viewPersonajes.getChildAdapterPosition(view);
+                    if (idPersonaje!=idPersonajeInt){
+                        Intent intent=new Intent(JuegoActivity.this,IntercambioActivity.class);
+                        Personaje p=listaPersonajesSelec.get(idPersonaje);
+                        String[] pasocartas=p.getCartas();
+                        intent.putExtra(IntercambioActivity.Keycartas,pasocartas);
+                        Personaje q=listaPersonajesSelec.get(idPersonajeInt);
+                        String[] pasocartas2=q.getCartas();
+                        intent.putExtra(IntercambioActivity.Keycartas2,pasocartas2);
+                        startActivityForResult(intent,IntercambioActivity.pasarcartas);
+                    }
+
+                }else{
+                    idPersonaje=viewPersonajes.getChildAdapterPosition(view);
+                    PersonajeSelec();
+                }
+
             }
         });
         carta1.setOnLongClickListener(new View.OnLongClickListener() {
@@ -726,5 +744,10 @@ public class JuegoActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void Intercambiar(View view) {
+        viewPersonajes.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+        intercambiar=true;
     }
 }

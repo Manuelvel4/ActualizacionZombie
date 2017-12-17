@@ -75,10 +75,11 @@
         android:id="@+id/BTNCambio"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:text="intercambiar"
-        android:textSize="8sp"
+        android:layout_alignStart="@+id/ModoZombie"
         android:layout_below="@+id/ModoZombie"
-        android:layout_alignStart="@+id/ModoZombie" />
+        android:onClick="Intercambiar"
+        android:text="intercambiar"
+        android:textSize="8sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ViewUsuarios"
