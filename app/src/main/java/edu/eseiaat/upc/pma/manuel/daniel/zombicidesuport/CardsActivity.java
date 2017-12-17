@@ -251,5 +251,6 @@ public class CardsActivity extends AppCompatActivity {
     }
 
     public void Cancelar(View view) {
+        finish();
     }
 }
