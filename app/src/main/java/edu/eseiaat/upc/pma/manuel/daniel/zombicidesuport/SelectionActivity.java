@@ -44,7 +44,6 @@ public class SelectionActivity extends AppCompatActivity{
     private RecyclerView viewPersonajesSelec;
     private PersonajesAdapter adapterPersonajesSelec;
     private ImageView borrar;
-    private boolean[] visibilidad;
     private Personaje watts,joshua,shannon,grindlock,belle,kim;
 
 
@@ -214,7 +213,6 @@ public class SelectionActivity extends AppCompatActivity{
             }
         });
     }
-
     private void CrearLista() {
         listaPersonajes.add(watts);
         listaPersonajes.add(joshua);
@@ -384,8 +382,7 @@ public class SelectionActivity extends AppCompatActivity{
             p.modozombie=false;
         }
         Intent intent=new Intent(this,JuegoActivity.class);
-        Personaje p=listaPersonajesSelec.get(idPersonaje);
-        intent.putExtra(JuegoActivity.KeyListaPersonajes, p);
+        intent.putExtra(JuegoActivity.KeyListaPersonajes, listaPersonajesSelec);
         startActivity(intent);
         finish();
     }

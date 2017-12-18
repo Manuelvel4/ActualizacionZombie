@@ -1,12 +1,6 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
 import android.graphics.drawable.Drawable;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
-
 import java.io.Serializable;
 
 /**

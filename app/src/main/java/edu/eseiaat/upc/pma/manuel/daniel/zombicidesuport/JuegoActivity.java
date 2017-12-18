@@ -23,12 +23,9 @@ public class JuegoActivity extends AppCompatActivity {
 
     public static String KeyListaPersonajes="key_listaPersonajes";
     public static String KeyCartasSeleccionadas="key_cartasSeleccionadas";
-    private int[] union;
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
     private ImageView foto;
     private ArrayList<Personaje> listaPersonajes;
-    private ArrayList<Personaje> listaPersonajeszombie;
-    private ArrayList<Personaje> listaPersonajesSelec;
     private ArrayList<Cartas> listacartas;
     private RecyclerView viewPersonajes;
     private LinearLayoutManager linlayoutmanager;
@@ -39,7 +36,6 @@ public class JuegoActivity extends AppCompatActivity {
     private Switch modozombie;
     private boolean intercambiar;
 
-    private Personaje p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,37 +56,26 @@ public class JuegoActivity extends AppCompatActivity {
         nombre=(TextView)findViewById(R.id.nombre);
         modozombie = (Switch) findViewById(R.id.ModoZombie);
 
-        p= (Personaje) getIntent().getSerializableExtra(KeyListaPersonajes);
         listaPersonajes=new ArrayList<>();
-        listaPersonajeszombie=new ArrayList<>();
-        listaPersonajesSelec=new ArrayList<>();
+        listaPersonajes= (ArrayList<Personaje>) getIntent().getSerializableExtra(KeyListaPersonajes);
         listacartas=new ArrayList<>();
-
-        OtrosCartas();
-        EspecialesCartas();
-        CuerpoCartas();
-        DistanciaCartas();
-        CrearPersonajes();
-        //CrearPersonajesZombies();
-        ListaPersonajesSelec();
 
         viewPersonajes =(RecyclerView)findViewById(R.id.ViewPersonajes);
         linlayoutmanager =new LinearLayoutManager(this);
         viewPersonajes.setLayoutManager(linlayoutmanager);
-        adapterPersonajes =new PersonajesAdapter(this,listaPersonajesSelec);
+        adapterPersonajes =new PersonajesAdapter(this,listaPersonajes);
         viewPersonajes.setAdapter(adapterPersonajes);
         idPersonaje=0;
 
         drop=new boolean[5];
 
-        inicio();
-        PersonajeSelec();
+        //PersonajeSelec();
 
 
-        adapterPersonajes.setOnClickListener(new View.OnClickListener() {
+        /*adapterPersonajes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if (intercambiar){
+                if (intercambiar){
                     intercambiar=false;
                     idPersonajeInt=viewPersonajes.getChildAdapterPosition(view);
                     if (idPersonaje!=idPersonajeInt){
@@ -104,14 +89,14 @@ public class JuegoActivity extends AppCompatActivity {
                         startActivityForResult(intent,IntercambioActivity.pasarcartas);
                     }
 
-                }else{*/
+                }else{
                     idPersonaje=viewPersonajes.getChildAdapterPosition(view);
                     PersonajeSelec();
-                //}
+                }
 
             }
-        });
-        carta1.setOnLongClickListener(new View.OnLongClickListener() {
+        });*/
+        /*carta1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 drop[0]=true;
@@ -209,7 +194,7 @@ public class JuegoActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*carta3.setOnLongClickListener(new View.OnLongClickListener() {
+        carta3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 drop[2]=true;
@@ -367,30 +352,9 @@ public class JuegoActivity extends AppCompatActivity {
                 return true;
             }
         });*/
-        modozombie.setOnClickListener(new View.OnClickListener() {
+       /* modozombie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Personaje p=listaPersonajesSelec.get(idPersonaje);
-                for (int i=0;i<listaPersonajes.size();i++){
-                    Personaje q=listaPersonajes.get(i);
-                    if (p.getNombre().equals(q.getNombre())){
-                        if (modozombie.isChecked()){
-                            listaPersonajesSelec.add(listaPersonajeszombie.get(i));
-                            Personaje r=listaPersonajesSelec.get(listaPersonajesSelec.size()-1);
-                            r.setModozombie(true);
-                            CambioModo();
-                        }else{
-                            listaPersonajesSelec.add(listaPersonajes.get(i));
-                            Personaje r=listaPersonajesSelec.get(listaPersonajesSelec.size()-1);
-                            r.setModozombie(false);
-                            CambioModo();
-                        }
-                    }
-                }
-                listaPersonajesSelec.remove(idPersonaje);
-                idPersonaje=listaPersonajesSelec.size()-1;
-                adapterPersonajes.notifyDataSetChanged();
-                PersonajeSelec();
 
             }
         });
@@ -428,68 +392,16 @@ public class JuegoActivity extends AppCompatActivity {
 
     }
 
-    private void CrearPersonajes() {
-        listaPersonajesSelec.add(p);
-    }
-
     private void SeleccionarCarta() {
         Intent intent=new Intent(JuegoActivity.this,CardsActivity.class);
         Personaje p=listaPersonajesSelec.get(idPersonaje);
         intent.putExtra(CardsActivity.Keycartas,p);
-        startActivityForResult(intent,CardsActivity.pasarcartas);
+        startActivityForResult(intent,CardsActivity.pasarcartas);*/
     }
 
-    private void CambioModo() {
-        Personaje p=listaPersonajesSelec.get(idPersonaje);
-        Personaje r=listaPersonajesSelec.get(listaPersonajesSelec.size()-1);
-        r.carta1=p.carta1;
-        r.carta2=p.carta2;
-        r.carta3=p.carta3;
-        r.carta4=p.carta4;
-        r.carta5=p.carta5;
-        r.level=p.level;
-    }
-    private void ResetDrop() {
-        for (int i=0;i<drop.length;i++){
-            drop[i]=false;
-        }
-    }
-    private void inicio() {
-        for (int i=0; i<listaPersonajesSelec.size();i++){
-            Personaje p=listaPersonajesSelec.get(i);
-            for (int t=0;i<listacartas.size();i++){
-                Cartas c=listacartas.get(t);
-                if (c.getNombre().equals("cartamano")){
-                    p.setCarta1(c);
-                    p.setCarta2(c);
-                    p.setCarta3(c);
-                    p.setCarta4(c);
-                    p.setCarta5(c);
-                }
-                if (p.getNombre().equals("watts")){
-                    if (c.getNombre().equals("cbaseballbat")){
-                        p.setCarta1(c);
-                    }
-                }
-            }
 
-
-        }
-    }
-    private void ListaPersonajesSelec() {
-        boolean[] level=new boolean[6];
-        for (int i=0;i<level.length;i++){
-            level[i]=false;
-        }
-        for (int i=0;i<union.length;i++){
-            Personaje p=listaPersonajes.get(union[i]);
-            listaPersonajesSelec.add(p);
-            Personaje ps=listaPersonajesSelec.get(i);
-            ps.setLevel(level);
-        }
-    }
-    private void PersonajeSelec() {
-        Personaje p = listaPersonajesSelec.get(idPersonaje);
+    /*private void PersonajeSelec() {
+        Personaje p = listaPersonajes.get(idPersonaje);
         habAzul.setText(p.getHabAzul());
         habAmarilla.setText(p.getHabAmarilla());
         habNaranja1.setText(p.getHabNaranja1());
@@ -529,51 +441,13 @@ public class JuegoActivity extends AppCompatActivity {
         }
     }
 
-    private void DistanciaCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ceviltwins),"ceviltwins"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cpistol),"cpistol"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.crifle),"crifle"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.csawedoff),"csawedoff"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cshotgun),"cshotgun"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.csubmg),"csubmg"));
-    }
-    private void CuerpoCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cbaseballbat),"cbaseballbat"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cchainsaw),"cchainsaw"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ccrowbar),"ccrowbar"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cfireaxe),"cfireaxe"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ckatana),"ckatana"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmachete),"cmachete"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cpan),"cpan"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
-    }
-    private void EspecialesCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cgoaliemask),"cgoaliemask"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cflashlight),"cflashlight"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cplentyofammo),"cplentyofammo"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cplentyofammoshotgun),"cplentyofammoshotgun"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cscope),"cscope"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmolotov),"cmolotov"));
-    }
-    private void OtrosCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cbagofrice),"cbagofrice"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ccannedfood),"ccannedfood"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cwater),"cwater"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cgasoline),"cgasoline"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cglassbottle),"cglassbottle"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cwound),"cwound"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cartamano),"cartamano"));
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==CardsActivity.pasarcartas){
             if (resultCode==RESULT_OK){
-                Personaje p=listaPersonajesSelec.get(idPersonaje);
-               // p=data.getExtras().getSerializable(KeyCartasSeleccionadas);
-                PersonajeSelec();
+
             }
         }
 
@@ -582,5 +456,5 @@ public class JuegoActivity extends AppCompatActivity {
     public void Intercambiar(View view) {
         viewPersonajes.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         intercambiar=true;
-    }
+    }*/
 }
