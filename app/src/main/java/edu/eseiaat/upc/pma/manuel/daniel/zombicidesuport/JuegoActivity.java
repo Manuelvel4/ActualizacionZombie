@@ -39,6 +39,7 @@ public class JuegoActivity extends AppCompatActivity {
     private Switch modozombie;
     private boolean intercambiar;
 
+    private Personaje p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class JuegoActivity extends AppCompatActivity {
         nombre=(TextView)findViewById(R.id.nombre);
         modozombie = (Switch) findViewById(R.id.ModoZombie);
 
-        union=getIntent().getIntArrayExtra(KeyListaPersonajes);
+        p= (Personaje) getIntent().getSerializableExtra(KeyListaPersonajes);
         listaPersonajes=new ArrayList<>();
         listaPersonajeszombie=new ArrayList<>();
         listaPersonajesSelec=new ArrayList<>();
@@ -70,7 +71,7 @@ public class JuegoActivity extends AppCompatActivity {
         CuerpoCartas();
         DistanciaCartas();
         CrearPersonajes();
-        CrearPersonajesZombies();
+        //CrearPersonajesZombies();
         ListaPersonajesSelec();
 
         viewPersonajes =(RecyclerView)findViewById(R.id.ViewPersonajes);
@@ -427,6 +428,10 @@ public class JuegoActivity extends AppCompatActivity {
 
     }
 
+    private void CrearPersonajes() {
+        listaPersonajesSelec.add(p);
+    }
+
     private void SeleccionarCarta() {
         Intent intent=new Intent(JuegoActivity.this,CardsActivity.class);
         Personaje p=listaPersonajesSelec.get(idPersonaje);
@@ -522,153 +527,6 @@ public class JuegoActivity extends AppCompatActivity {
         if (!p.level[5]){
             habRoja3.setBackgroundColor(getColor(android.R.color.white));
         }
-    }
-    private void CrearPersonajes() {
-        String nombre="watts";
-        String habazul=getString(R.string.EmpezarConBateBeisbol);
-        String habamarilla=getString(R.string.mas1accion);
-        String habnaranja1=getString(R.string.mas1dadoCuerpoACuerpo);
-        String habnaranja2=getString(R.string.Empujon);
-        String habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
-        String habroja2=getString( R.string.mas1accionDeCombateGratuita);
-        String habroja3=getString(R.string.mas1alasTiradasDeCombate);
-        Drawable foto=getDrawable(R.drawable.pwatts);
-        Drawable cara=getDrawable(R.drawable.pwattscara);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Joshua";
-        habazul=getString(R.string.Socorrista);
-        habamarilla=getString(R.string.mas1accion);
-        habnaranja1=getString(R.string.mas1acciónDeCombateADistancia);
-        habnaranja2=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
-        habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
-        habroja2=getString( R.string.mas1accionDeCombateGratuita);
-        habroja3=getString(R.string.mas1alasTiradasDeCombate);
-        foto=getDrawable(R.drawable.pjoshua);
-        cara=getDrawable(R.drawable.pjoshuacara);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Shannon";
-        habazul=getString(R.string.DisparoABocajarro);
-        habamarilla=getString(R.string.mas1accion);
-        habnaranja1=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja2=getString(R.string.Afortunada);
-        habroja1=getString(R.string.mas1dadoCombate);
-        habroja2=getString( R.string.mas1accionDeCombateGratuita);
-        habroja3=getString(R.string.Escurridiza);
-        foto=getDrawable(R.drawable.pshannon);
-        cara=getDrawable(R.drawable.pshannoncara);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Grindlock";
-        habazul=getString(R.string.Provocacion);
-        habamarilla=getString(R.string.mas1accion);
-        habnaranja1=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        habnaranja2=getString(R.string.Escurridizo);
-        habroja1=getString(R.string.mas1AlDañoCuerpoACuerpo);
-        habroja2=getString( R.string.EsoEsTodoLoQueTienes);
-        habroja3=getString(R.string.seisEnElDadoMas1DadoDeCombate);
-        foto=getDrawable(R.drawable.pgrindlock);
-        cara=getDrawable(R.drawable.pgrindlockcara);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Belle";
-        habazul=getString(R.string.mas1accionDeMovimientoGratuita);
-        habamarilla=getString(R.string.mas1accion);
-        habnaranja1=getString(R.string.mas1aLasTiradasADistancia);
-        habnaranja2=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        habroja1=getString(R.string.mas1dadoCombate);
-        habroja2=getString( R.string.mas1accionDeMovimientoGratuita);
-        habroja3=getString(R.string.Ambidiestra);
-        foto=getDrawable(R.drawable.pbelle);
-        cara=getDrawable(R.drawable.pbellecara);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Kim";
-        habazul=getString(R.string.Afortunada);
-        habamarilla=getString(R.string.mas1accion);
-        habnaranja1=getString(R.string.seisEnElDadoMas1DadoADistancia);
-        habnaranja2=getString(R.string.Amano);
-        habroja1=getString(R.string.mas1accionDeCombateGratuita);
-        habroja2=getString( R.string.mas1alasTiradasDeCombate);
-        habroja3=getString(R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
-        foto=getDrawable(R.drawable.pkim);
-        cara=getDrawable(R.drawable.pkimcara);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-    }
-    private void CrearPersonajesZombies() {
-        String nombre="watts";
-        String habazul=getString(R.string.EmpezarConBateBeisbol);
-        String habamarilla=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        String habnaranja1=getString(R.string.FrenesiCuerpoACuerpo);
-        String habnaranja2=getString(R.string.Empujon);
-        String habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
-        String habroja2=getString( R.string.mas1alasTiradasDeCombate);
-        String habroja3=getString(R.string.FrenesiCombate);
-        Drawable foto=getDrawable(R.drawable.pwattszombie);
-        Drawable cara=getDrawable(R.drawable.pwattscarazombie);
-        listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Joshua";
-        habazul=getString(R.string.Socorrista);
-        habamarilla=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        habnaranja1=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
-        habnaranja2=getString(R.string.SuperFuerza);
-        habroja1=getString(R.string.mas1aLasTiradasADistancia);
-        habroja2=getString( R.string.LiderNato);
-        habroja3=getString(R.string.Regeneracion);
-        foto=getDrawable(R.drawable.pjoshuazombie);
-        cara=getDrawable(R.drawable.pjoshuacarazombie);
-        listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Shannon";
-        habazul=getString(R.string.DisparoABocajarro);
-        habamarilla=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja1=getString(R.string.FrenesiAdistancia);
-        habnaranja2=getString(R.string.Afortunada);
-        habroja1=getString(R.string.mas1dadoCombate);
-        habroja2=getString( R.string.Escurridiza);
-        habroja3=getString(R.string.SegadoraCombate);
-        foto=getDrawable(R.drawable.pshannonzombie);
-        cara=getDrawable(R.drawable.pshannoncarazombie);
-        listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Grindlock";
-        habazul=getString(R.string.Provocacion);
-        habamarilla=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        habnaranja1=getString(R.string.VinculoZombi);
-        habnaranja2=getString(R.string.Escurridizo);
-        habroja1=getString(R.string.mas1AlDañoCuerpoACuerpo);
-        habroja2=getString( R.string.SegadoraCombate);
-        habroja3=getString(R.string.seisEnElDadoMas1DadoDeCombate);
-        foto=getDrawable(R.drawable.pgrindlockzombie);
-        cara=getDrawable(R.drawable.pgrindlockcarazombie);
-        listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Belle";
-        habazul=getString(R.string.mas1accionDeMovimientoGratuita);
-        habamarilla=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja1=getString(R.string.mas1dadoADistancia);
-        habnaranja2=getString(R.string.VinculoZombi);
-        habroja1=getString(R.string.mas1dadoCombate);
-        habroja2=getString( R.string.Regeneracion);
-        habroja3=getString(R.string.Ambidiestra);
-        foto=getDrawable(R.drawable.pbellezombie);
-        cara=getDrawable(R.drawable.pbellecarazombie);
-        listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-        nombre="Kim";
-        habazul=getString(R.string.Afortunada);
-        habamarilla=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja1=getString(R.string.SegadoraCombate);
-        habnaranja2=getString(R.string.Amano);
-        habroja1=getString(R.string.mas1alasTiradasDeCombate);
-        habroja2=getString( R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
-        habroja3=getString(R.string.VinculoZombi);
-        foto=getDrawable(R.drawable.pkimzombie);
-        cara=getDrawable(R.drawable.pkimcarazombie);
-        listaPersonajeszombie.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
     }
 
     private void DistanciaCartas() {

@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,6 @@ public class SelectionActivity extends AppCompatActivity{
     private PersonajesAdapter adapterPersonajes;
     private ArrayAdapter<String> adapterUsuarios;
     private LinearLayoutManager linlayoutmanager;
-    private TableLayout tableLayout;
     private ImageView descripcionPersonaje;
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3;
     private CheckBox modoZombie;
@@ -44,7 +45,7 @@ public class SelectionActivity extends AppCompatActivity{
     private PersonajesAdapter adapterPersonajesSelec;
     private ImageView borrar;
     private boolean[] visibilidad;
-    private List<Integer> union;
+    private Personaje watts,joshua,shannon,grindlock,belle,kim;
 
 
     @Override
@@ -63,23 +64,23 @@ public class SelectionActivity extends AppCompatActivity{
         modoZombie=(CheckBox)findViewById(R.id.ModoZombie);
         borrar=(ImageView)findViewById(R.id.Borrar);
 
-
         TextView Sala=(TextView)findViewById(R.id.Sala);
         ListView viewUsuarios=(ListView)findViewById(R.id.ViewUsuarios);
         Sala.setText(getIntent().getExtras().getString(keysala));
         listaUsuarios=new ArrayList<>();
         listaUsuarios.add(getIntent().getExtras().getString(keynombre));
-        adapterUsuarios=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listaUsuarios);
+        adapterUsuarios=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,listaUsuarios);
         viewUsuarios.setAdapter(adapterUsuarios);
 
+        CrearPersonajes();
         listaPersonajes=new ArrayList<>();
-        union=new ArrayList<>();
-
+        CrearLista();
+        PersonajeSeleccionado();
         viewPersonajes =(RecyclerView)findViewById(R.id.ListaPersonajes);
         linlayoutmanager =new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         viewPersonajes.setLayoutManager(linlayoutmanager);
-        CrearPersonajes();
-        PersonajeSeleccionado();
+
+
         adapterPersonajes =new PersonajesAdapter(this,listaPersonajes);
         viewPersonajes.setAdapter(adapterPersonajes);
 
@@ -106,11 +107,9 @@ public class SelectionActivity extends AppCompatActivity{
                     case DragEvent.ACTION_DROP:
 
                         if (personajeSelecDrop){
-                            listaPersonajesSelec.remove(idPersonajeSelec);
-                            Personaje p=listaPersonajes.get(union.get(idPersonajeSelec));
+                            Personaje p=listaPersonajesSelec.get(idPersonajeSelec);
                             p.setInvisible(false);
-                            union.remove(idPersonajeSelec);
-
+                            listaPersonajesSelec.remove(idPersonajeSelec);
                         }
                         if (personajeDrop){
                             Personaje p=listaPersonajes.get(idPersonaje);
@@ -148,8 +147,7 @@ public class SelectionActivity extends AppCompatActivity{
                             Personaje p=listaPersonajes.get(idPersonaje);
                             p.setInvisible(true);
                             adapterPersonajes.notifyDataSetChanged();
-                            union.add(idPersonaje);
-                            listaPersonajesSelec.add(new Personaje (p.getNombre(),p.getCara(),false));
+                            listaPersonajesSelec.add(p);
                             adapterPersonajesSelec.notifyDataSetChanged();
                             viewPersonajesSelec.smoothScrollToPosition(listaPersonajesSelec.size()-1);
 
@@ -168,16 +166,13 @@ public class SelectionActivity extends AppCompatActivity{
         modoZombie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GuardarInvisibles();
-                listaPersonajes.clear();
-                if (modoZombie.isChecked()==false) {
-                    CrearPersonajes();
-                }else{
-                    CrearPersonajesZombies();
+                for (int i=0;i<listaPersonajes.size();i++){
+                    Personaje p=listaPersonajes.get(i);
+                    p.modozombie=!p.modozombie;
                 }
                 PersonajeSeleccionado();
-                CargarInvisibles();
                 adapterPersonajes.notifyDataSetChanged();
+                adapterPersonajesSelec.notifyDataSetChanged();
              }
         });
         adapterPersonajes.setOnClickListener(new View.OnClickListener() {
@@ -190,9 +185,9 @@ public class SelectionActivity extends AppCompatActivity{
         adapterPersonajes.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                personajeDrop=true;
                 idPersonaje=viewPersonajes.getChildAdapterPosition(view);
                 Personaje p=listaPersonajes.get(idPersonaje);
-                personajeDrop=true;
                 PersonajeSeleccionado();
                 if (!p.isInvisible()){
                     ClipData data = ClipData.newPlainText("", "");
@@ -200,6 +195,8 @@ public class SelectionActivity extends AppCompatActivity{
                     view.startDrag(data, shadowBuilder, view, 0);
                     //view.startDragAndDrop(data,shadowBuilder,view,0);
                     return true;
+                }else{
+                    Toast.makeText(SelectionActivity.this, R.string.PersonajeYaSeleccionado, Toast.LENGTH_SHORT).show();
                 }
                 return false;
            }
@@ -218,178 +215,163 @@ public class SelectionActivity extends AppCompatActivity{
         });
     }
 
-    private void CargarInvisibles() {
-        for (int i=0;i<listaPersonajes.size();i++){
-            Personaje p=listaPersonajes.get(i);
-            p.setInvisible(visibilidad[i]);
-        }
-
-    }
-    private void GuardarInvisibles() {
-        visibilidad=new boolean[listaPersonajes.size()];
-        for (int i=0;i<listaPersonajes.size();i++){
-            Personaje p=listaPersonajes.get(i);
-            visibilidad[i]=p.isInvisible();
-        }
-
+    private void CrearLista() {
+        listaPersonajes.add(watts);
+        listaPersonajes.add(joshua);
+        listaPersonajes.add(shannon);
+        listaPersonajes.add(grindlock);
+        listaPersonajes.add(belle);
+        listaPersonajes.add(kim);
     }
     private void PersonajeSeleccionado() {
         Personaje p = listaPersonajes.get(idPersonaje);
-        habAzul.setText(p.getHabAzul());
-        habAmarilla.setText(p.getHabAmarilla());
-        habNaranja1.setText(p.getHabNaranja1());
-        habNaranja2.setText(p.getHabNaranja2());
-        habRoja1.setText(p.getHabRoja1());
-        habRoja2.setText(p.getHabRoja2());
-        habRoja3.setText(p.getHabRoja3());
-        descripcionPersonaje.setImageDrawable(p.getFoto());
+        if (modoZombie.isChecked()) {
+            habAzul.setText(p.getHabAzulZ());
+            habAmarilla.setText(p.getHabAmarillaZ());
+            habNaranja1.setText(p.getHabNaranja1Z());
+            habNaranja2.setText(p.getHabNaranja2Z());
+            habRoja1.setText(p.getHabRoja1Z());
+            habRoja2.setText(p.getHabRoja2Z());
+            habRoja3.setText(p.getHabRoja3Z());
+            descripcionPersonaje.setImageDrawable(p.getFotoZ());
+        }else{
+            habAzul.setText(p.getHabAzul());
+            habAmarilla.setText(p.getHabAmarilla());
+            habNaranja1.setText(p.getHabNaranja1());
+            habNaranja2.setText(p.getHabNaranja2());
+            habRoja1.setText(p.getHabRoja1());
+            habRoja2.setText(p.getHabRoja2());
+            habRoja3.setText(p.getHabRoja3());
+            descripcionPersonaje.setImageDrawable(p.getFoto());
+        }
+
     }
     private void CrearPersonajes() {
-            String nombre="watts";
-            String habazul=getString(R.string.EmpezarConBateBeisbol);
-            String habamarilla=getString(R.string.mas1accion);
-            String habnaranja1=getString(R.string.mas1dadoCuerpoACuerpo);
-            String habnaranja2=getString(R.string.Empujon);
-            String habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
-            String habroja2=getString( R.string.mas1accionDeCombateGratuita);
-            String habroja3=getString(R.string.mas1alasTiradasDeCombate);
-            Drawable foto=getDrawable(R.drawable.pwatts);
-            Drawable cara=getDrawable(R.drawable.pwattscara);
-            listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-            nombre="Joshua";
-            habazul=getString(R.string.Socorrista);
-            habamarilla=getString(R.string.mas1accion);
-            habnaranja1=getString(R.string.mas1acciónDeCombateADistancia);
-            habnaranja2=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
-            habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
-            habroja2=getString( R.string.mas1accionDeCombateGratuita);
-            habroja3=getString(R.string.mas1alasTiradasDeCombate);
-            foto=getDrawable(R.drawable.pjoshua);
-            cara=getDrawable(R.drawable.pjoshuacara);
-            listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-            nombre="Shannon";
-            habazul=getString(R.string.DisparoABocajarro);
-            habamarilla=getString(R.string.mas1accion);
-            habnaranja1=getString(R.string.mas1accionADistanciaGratuita);
-            habnaranja2=getString(R.string.Afortunada);
-            habroja1=getString(R.string.mas1dadoCombate);
-            habroja2=getString( R.string.mas1accionDeCombateGratuita);
-            habroja3=getString(R.string.Escurridiza);
-            foto=getDrawable(R.drawable.pshannon);
-            cara=getDrawable(R.drawable.pshannoncara);
-            listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-            nombre="Grindlock";
-            habazul=getString(R.string.Provocacion);
-            habamarilla=getString(R.string.mas1accion);
-            habnaranja1=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-            habnaranja2=getString(R.string.Escurridizo);
-            habroja1=getString(R.string.mas1AlDañoCuerpoACuerpo);
-            habroja2=getString( R.string.EsoEsTodoLoQueTienes);
-            habroja3=getString(R.string.seisEnElDadoMas1DadoDeCombate);
-            foto=getDrawable(R.drawable.pgrindlock);
-            cara=getDrawable(R.drawable.pgrindlockcara);
-            listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-            nombre="Belle";
-            habazul=getString(R.string.mas1accionDeMovimientoGratuita);
-            habamarilla=getString(R.string.mas1accion);
-            habnaranja1=getString(R.string.mas1aLasTiradasADistancia);
-            habnaranja2=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-            habroja1=getString(R.string.mas1dadoCombate);
-            habroja2=getString( R.string.mas1accionDeMovimientoGratuita);
-            habroja3=getString(R.string.Ambidiestra);
-            foto=getDrawable(R.drawable.pbelle);
-            cara=getDrawable(R.drawable.pbellecara);
-            listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
-            nombre="Kim";
-            habazul=getString(R.string.Afortunada);
-            habamarilla=getString(R.string.mas1accion);
-            habnaranja1=getString(R.string.seisEnElDadoMas1DadoADistancia);
-            habnaranja2=getString(R.string.Amano);
-            habroja1=getString(R.string.mas1accionDeCombateGratuita);
-            habroja2=getString( R.string.mas1alasTiradasDeCombate);
-            habroja3=getString(R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
-            foto=getDrawable(R.drawable.pkim);
-            cara=getDrawable(R.drawable.pkimcara);
-            listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-    }
-    private void CrearPersonajesZombies() {
         String nombre="watts";
         String habazul=getString(R.string.EmpezarConBateBeisbol);
-        String habamarilla=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        String habnaranja1=getString(R.string.FrenesiCuerpoACuerpo);
+        String habamarilla=getString(R.string.mas1accion);
+        String habnaranja1=getString(R.string.mas1dadoCuerpoACuerpo);
         String habnaranja2=getString(R.string.Empujon);
         String habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
-        String habroja2=getString( R.string.mas1alasTiradasDeCombate);
-        String habroja3=getString(R.string.FrenesiCombate);
-        Drawable foto=getDrawable(R.drawable.pwattszombie);
-        Drawable cara=getDrawable(R.drawable.pwattscarazombie);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
+        String habroja2=getString( R.string.mas1accionDeCombateGratuita);
+        String habroja3=getString(R.string.mas1alasTiradasDeCombate);
+        Drawable foto=getDrawable(R.drawable.pwatts);
+        Drawable cara=getDrawable(R.drawable.pwattscara);
+        String habazulZ=getString(R.string.EmpezarConBateBeisbol);
+        String habamarillaZ=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
+        String habnaranja1Z=getString(R.string.FrenesiCuerpoACuerpo);
+        String habnaranja2Z=getString(R.string.Empujon);
+        String habroja1Z=getString(R.string.dosZonasPorAccionDeMovimiento);
+        String habroja2Z=getString( R.string.mas1alasTiradasDeCombate);
+        String habroja3Z=getString(R.string.FrenesiCombate);
+        Drawable fotoZ=getDrawable(R.drawable.pwattszombie);
+        Drawable caraZ=getDrawable(R.drawable.pwattscarazombie);
+        watts=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Joshua";
         habazul=getString(R.string.Socorrista);
-        habamarilla=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        habnaranja1=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
-        habnaranja2=getString(R.string.SuperFuerza);
-        habroja1=getString(R.string.mas1aLasTiradasADistancia);
-        habroja2=getString( R.string.LiderNato);
-        habroja3=getString(R.string.Regeneracion);
-        foto=getDrawable(R.drawable.pjoshuazombie);
-        cara=getDrawable(R.drawable.pjoshuacarazombie);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
+        habamarilla=getString(R.string.mas1accion);
+        habnaranja1=getString(R.string.mas1acciónDeCombateADistancia);
+        habnaranja2=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
+        habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
+        habroja2=getString( R.string.mas1accionDeCombateGratuita);
+        habroja3=getString(R.string.mas1alasTiradasDeCombate);
+        foto=getDrawable(R.drawable.pjoshua);
+        cara=getDrawable(R.drawable.pjoshuacara);
+        habazulZ=getString(R.string.Socorrista);
+        habamarillaZ=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
+        habnaranja1Z=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
+        habnaranja2Z=getString(R.string.SuperFuerza);
+        habroja1Z=getString(R.string.mas1aLasTiradasADistancia);
+        habroja2Z=getString( R.string.LiderNato);
+        habroja3Z=getString(R.string.Regeneracion);
+        fotoZ=getDrawable(R.drawable.pjoshuazombie);
+        caraZ=getDrawable(R.drawable.pjoshuacarazombie);
+        joshua=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Shannon";
         habazul=getString(R.string.DisparoABocajarro);
-        habamarilla=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja1=getString(R.string.FrenesiAdistancia);
+        habamarilla=getString(R.string.mas1accion);
+        habnaranja1=getString(R.string.mas1accionADistanciaGratuita);
         habnaranja2=getString(R.string.Afortunada);
         habroja1=getString(R.string.mas1dadoCombate);
-        habroja2=getString( R.string.Escurridiza);
-        habroja3=getString(R.string.SegadoraCombate);
-        foto=getDrawable(R.drawable.pshannonzombie);
-        cara=getDrawable(R.drawable.pshannoncarazombie);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
+        habroja2=getString( R.string.mas1accionDeCombateGratuita);
+        habroja3=getString(R.string.Escurridiza);
+        foto=getDrawable(R.drawable.pshannon);
+        cara=getDrawable(R.drawable.pshannoncara);
+        habazulZ=getString(R.string.DisparoABocajarro);
+        habamarillaZ=getString(R.string.mas1accionADistanciaGratuita);
+        habnaranja1Z=getString(R.string.FrenesiAdistancia);
+        habnaranja2Z=getString(R.string.Afortunada);
+        habroja1Z=getString(R.string.mas1dadoCombate);
+        habroja2Z=getString( R.string.Escurridiza);
+        habroja3Z=getString(R.string.SegadoraCombate);
+        fotoZ=getDrawable(R.drawable.pshannonzombie);
+        caraZ=getDrawable(R.drawable.pshannoncarazombie);
+        shannon=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Grindlock";
         habazul=getString(R.string.Provocacion);
-        habamarilla=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
-        habnaranja1=getString(R.string.VinculoZombi);
+        habamarilla=getString(R.string.mas1accion);
+        habnaranja1=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
         habnaranja2=getString(R.string.Escurridizo);
         habroja1=getString(R.string.mas1AlDañoCuerpoACuerpo);
-        habroja2=getString( R.string.SegadoraCombate);
+        habroja2=getString( R.string.EsoEsTodoLoQueTienes);
         habroja3=getString(R.string.seisEnElDadoMas1DadoDeCombate);
-        foto=getDrawable(R.drawable.pgrindlockzombie);
-        cara=getDrawable(R.drawable.pgrindlockcarazombie);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
+        foto=getDrawable(R.drawable.pgrindlock);
+        cara=getDrawable(R.drawable.pgrindlockcara);
+        habazulZ=getString(R.string.Provocacion);
+        habamarillaZ=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
+        habnaranja1Z=getString(R.string.VinculoZombi);
+        habnaranja2Z=getString(R.string.Escurridizo);
+        habroja1Z=getString(R.string.mas1AlDañoCuerpoACuerpo);
+        habroja2Z=getString( R.string.SegadoraCombate);
+        habroja3Z=getString(R.string.seisEnElDadoMas1DadoDeCombate);
+        fotoZ=getDrawable(R.drawable.pgrindlockzombie);
+        caraZ=getDrawable(R.drawable.pgrindlockcarazombie);
+        grindlock=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Belle";
         habazul=getString(R.string.mas1accionDeMovimientoGratuita);
-        habamarilla=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja1=getString(R.string.mas1dadoADistancia);
-        habnaranja2=getString(R.string.VinculoZombi);
+        habamarilla=getString(R.string.mas1accion);
+        habnaranja1=getString(R.string.mas1aLasTiradasADistancia);
+        habnaranja2=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
         habroja1=getString(R.string.mas1dadoCombate);
-        habroja2=getString( R.string.Regeneracion);
+        habroja2=getString( R.string.mas1accionDeMovimientoGratuita);
         habroja3=getString(R.string.Ambidiestra);
-        foto=getDrawable(R.drawable.pbellezombie);
-        cara=getDrawable(R.drawable.pbellecarazombie);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
+        foto=getDrawable(R.drawable.pbelle);
+        cara=getDrawable(R.drawable.pbellecara);
+        habazulZ=getString(R.string.mas1accionDeMovimientoGratuita);
+        habamarillaZ=getString(R.string.mas1accionADistanciaGratuita);
+        habnaranja1Z=getString(R.string.mas1dadoADistancia);
+        habnaranja2Z=getString(R.string.VinculoZombi);
+        habroja1Z=getString(R.string.mas1dadoCombate);
+        habroja2Z=getString( R.string.Regeneracion);
+        habroja3Z=getString(R.string.Ambidiestra);
+        fotoZ=getDrawable(R.drawable.pbellezombie);
+        caraZ=getDrawable(R.drawable.pbellecarazombie);
+        belle=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Kim";
         habazul=getString(R.string.Afortunada);
-        habamarilla=getString(R.string.mas1accionADistanciaGratuita);
-        habnaranja1=getString(R.string.SegadoraCombate);
+        habamarilla=getString(R.string.mas1accion);
+        habnaranja1=getString(R.string.seisEnElDadoMas1DadoADistancia);
         habnaranja2=getString(R.string.Amano);
-        habroja1=getString(R.string.mas1alasTiradasDeCombate);
-        habroja2=getString( R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
-        habroja3=getString(R.string.VinculoZombi);
-        foto=getDrawable(R.drawable.pkimzombie);
-        cara=getDrawable(R.drawable.pkimcarazombie);
-        listaPersonajes.add(new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara));
-
+        habroja1=getString(R.string.mas1accionDeCombateGratuita);
+        habroja2=getString( R.string.mas1alasTiradasDeCombate);
+        habroja3=getString(R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
+        foto=getDrawable(R.drawable.pkim);
+        cara=getDrawable(R.drawable.pkimcara);
+        habazulZ=getString(R.string.Afortunada);
+        habamarillaZ=getString(R.string.mas1accionADistanciaGratuita);
+        habnaranja1Z=getString(R.string.SegadoraCombate);
+        habnaranja2Z=getString(R.string.Amano);
+        habroja1Z=getString(R.string.mas1alasTiradasDeCombate);
+        habroja2Z=getString( R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
+        habroja3Z=getString(R.string.VinculoZombi);
+        fotoZ=getDrawable(R.drawable.pkimzombie);
+        caraZ=getDrawable(R.drawable.pkimcarazombie);
+        kim=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
     }
     public void Atras(View view) {
         Intent intent=new Intent(this,CrearActivity.class);
@@ -397,14 +379,9 @@ public class SelectionActivity extends AppCompatActivity{
         finish();
     }
     public void Aceptar(View view) {
-        int[] ps=new int[union.size()];
-        for (int i=0;i<union.size();i++){
-            ps[i]=union.get(i);
-        }
         Intent intent=new Intent(this,JuegoActivity.class);
         Personaje p=listaPersonajesSelec.get(idPersonaje);
-        intent.putExtra("k",p);
-        intent.putExtra(JuegoActivity.KeyListaPersonajes, ps);
+        intent.putExtra(JuegoActivity.KeyListaPersonajes, p);
         startActivity(intent);
         finish();
     }

@@ -40,12 +40,6 @@ public class PersonajesAdapter extends RecyclerView.Adapter<PersonajesAdapter.Vi
         Personaje item = (Personaje) ListaPersonajes.get(position);
         holder.cara.setImageDrawable(item.getCara());
         holder.nombre.setText(item.getNombre());
-        if(item.isInvisible()){
-            holder.cara.setAlpha((float)0.5);
-        }else{
-            holder.cara.setAlpha((float)1);
-        }
-
     }
 
     @Override
