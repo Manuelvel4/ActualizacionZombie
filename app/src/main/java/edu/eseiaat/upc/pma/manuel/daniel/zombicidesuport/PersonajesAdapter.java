@@ -38,8 +38,13 @@ public class PersonajesAdapter extends RecyclerView.Adapter<PersonajesAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Personaje item = (Personaje) ListaPersonajes.get(position);
-        holder.cara.setImageDrawable(item.getCara());
+        if (item.modozombie){
+            holder.cara.setImageDrawable(item.getCaraZ());
+        }else{
+            holder.cara.setImageDrawable(item.getCara());
+        }
         holder.nombre.setText(item.getNombre());
+
     }
 
     @Override

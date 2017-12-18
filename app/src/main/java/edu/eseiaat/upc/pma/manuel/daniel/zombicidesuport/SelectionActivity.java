@@ -379,6 +379,10 @@ public class SelectionActivity extends AppCompatActivity{
         finish();
     }
     public void Aceptar(View view) {
+        for (int i=0;i<listaPersonajes.size();i++){
+            Personaje p=listaPersonajes.get(i);
+            p.modozombie=false;
+        }
         Intent intent=new Intent(this,JuegoActivity.class);
         Personaje p=listaPersonajesSelec.get(idPersonaje);
         intent.putExtra(JuegoActivity.KeyListaPersonajes, p);
