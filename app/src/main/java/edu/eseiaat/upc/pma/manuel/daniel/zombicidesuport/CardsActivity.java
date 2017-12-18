@@ -23,16 +23,14 @@ public class CardsActivity extends AppCompatActivity {
     private LinearLayoutManager linlayoutmanager;
     private ImageView carta1,carta2,carta3,carta4,carta5;
     private Drawable cartaselect;
-    private String nombrecartaselect;
     private int idcarta;
-    private String[] cartasPersonaje;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards);
-        listacartas=new ArrayList<>();
+       /* listacartas=new ArrayList<>();
         Crear();
         viewCartas=(RecyclerView)findViewById(R.id.ViewCartas);
         linlayoutmanager =new LinearLayoutManager(this);
@@ -46,8 +44,8 @@ public class CardsActivity extends AppCompatActivity {
         carta3=(ImageView)findViewById(R.id.Carta3);
         carta4=(ImageView)findViewById(R.id.Carta4);
         carta5=(ImageView)findViewById(R.id.Carta5);
-        cartasPersonaje=new String[5];
-        cartasPersonaje=getIntent().getStringArrayExtra(Keycartas);
+        Personaje personaje=new Personaje(getIntent().getSerializableExtra(Keycartas));
+
         CrearCartas();
 
         adaptercartas.setOnLongClickListener(new View.OnLongClickListener() {
@@ -136,16 +134,13 @@ public class CardsActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*Intent intent = getIntent();
-        int a = intent.getExtras().getInt(Keycarta1);
-        ImageView icono = (ImageView) findViewById(R.id.Carta1);
-        icono.setImageDrawable(getDrawable(R.drawable.calavera));*/
     }
 
     private void CrearCartas() {
+
         for (int i=0;i<listacartas.size();i++){
             Cartas c=listacartas.get(i);
-            if (c.getNombre().equals(cartasPersonaje[0])){
+            if (c.getNombre().equals()){
                 carta1.setImageDrawable(c.getCarta());
             }
             if (c.getNombre().equals(cartasPersonaje[1])){
@@ -252,5 +247,5 @@ public class CardsActivity extends AppCompatActivity {
 
     public void Cancelar(View view) {
         finish();
-    }
-}
+    }*/
+}}

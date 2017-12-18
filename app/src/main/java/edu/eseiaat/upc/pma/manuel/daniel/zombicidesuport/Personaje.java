@@ -7,17 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.Serializable;
+
 /**
  * Created by PortatilDani on 17/11/2017.
  */
 
-public class Personaje{
+public class Personaje implements Serializable {
     public String nombre,habAzul, habAmarilla, habNaranja1,habNaranja2, habRoja1,HabRoja2,habRoja3;
     public Drawable foto,cara;
-    public Drawable carta1,carta2,carta3,carta4,carta5;
+    public Cartas carta1,carta2,carta3,carta4,carta5;
     public boolean invisible,modozombie;
     public boolean[] level;
-    public String[] cartas;
 
     public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, Drawable foto, Drawable cara) {
         this.nombre = nombre;
@@ -32,13 +33,7 @@ public class Personaje{
         this.cara = cara;
     }
 
-    public String[] getCartas() {
-        return cartas;
-    }
 
-    public void setCartas(String[] cartas) {
-        this.cartas = cartas;
-    }
 
     public boolean isModozombie() {
         return modozombie;
@@ -48,43 +43,43 @@ public class Personaje{
         this.modozombie = modozombie;
     }
 
-    public Drawable getCarta1() {
+    public Cartas getCarta1() {
         return carta1;
     }
 
-    public void setCarta1(Drawable carta1) {
+    public void setCarta1(Cartas carta1) {
         this.carta1 = carta1;
     }
 
-    public Drawable getCarta2() {
+    public Cartas getCarta2() {
         return carta2;
     }
 
-    public void setCarta2(Drawable carta2) {
+    public void setCarta2(Cartas carta2) {
         this.carta2 = carta2;
     }
 
-    public Drawable getCarta3() {
+    public Cartas getCarta3() {
         return carta3;
     }
 
-    public void setCarta3(Drawable carta3) {
+    public void setCarta3(Cartas carta3) {
         this.carta3 = carta3;
     }
 
-    public Drawable getCarta4() {
+    public Cartas getCarta4() {
         return carta4;
     }
 
-    public void setCarta4(Drawable carta4) {
+    public void setCarta4(Cartas carta4) {
         this.carta4 = carta4;
     }
 
-    public Drawable getCarta5() {
+    public Cartas getCarta5() {
         return carta5;
     }
 
-    public void setCarta5(Drawable carta5) {
+    public void setCarta5(Cartas carta5) {
         this.carta5 = carta5;
     }
 

@@ -402,6 +402,8 @@ public class SelectionActivity extends AppCompatActivity{
             ps[i]=union.get(i);
         }
         Intent intent=new Intent(this,JuegoActivity.class);
+        Personaje p=listaPersonajesSelec.get(idPersonaje);
+        intent.putExtra("k",p);
         intent.putExtra(JuegoActivity.KeyListaPersonajes, ps);
         startActivity(intent);
         finish();

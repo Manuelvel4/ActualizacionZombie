@@ -89,7 +89,7 @@ public class JuegoActivity extends AppCompatActivity {
         adapterPersonajes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (intercambiar){
+                /*if (intercambiar){
                     intercambiar=false;
                     idPersonajeInt=viewPersonajes.getChildAdapterPosition(view);
                     if (idPersonaje!=idPersonajeInt){
@@ -103,10 +103,10 @@ public class JuegoActivity extends AppCompatActivity {
                         startActivityForResult(intent,IntercambioActivity.pasarcartas);
                     }
 
-                }else{
+                }else{*/
                     idPersonaje=viewPersonajes.getChildAdapterPosition(view);
                     PersonajeSelec();
-                }
+                //}
 
             }
         });
@@ -128,30 +128,27 @@ public class JuegoActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
                         Personaje p=listaPersonajesSelec.get(idPersonaje);
-                        String[] c=p.getCartas();
+                        Cartas[] c=new Cartas[5];
+                        c[0]=p.getCarta1();
                         if (drop[1]){
-                            p.carta1=carta2.getDrawable();
-                            p.carta2=carta1.getDrawable();
-                            p.cartas[0]=c[1];
-                            p.cartas[1]=c[0];
+                            c[1]=p.getCarta2();
+                            p.carta1=c[1];
+                            p.carta2=c[0];
                         }
                         if (drop[2]){
-                            p.carta1=carta3.getDrawable();
-                            p.carta3=carta1.getDrawable();
-                            p.cartas[0]=c[2];
-                            p.cartas[2]=c[0];
+                            c[2]=p.getCarta3();
+                            p.carta1=c[2];
+                            p.carta3=c[0];
                         }
                         if (drop[3]){
-                            p.carta1=carta4.getDrawable();
-                            p.carta4=carta1.getDrawable();
-                            p.cartas[0]=c[3];
-                            p.cartas[3]=c[0];
+                            c[3]=p.getCarta4();
+                            p.carta1=c[3];
+                            p.carta4=c[0];
                         }
                         if (drop[4]){
-                            p.carta1=carta5.getDrawable();
-                            p.carta5=carta1.getDrawable();
-                            p.cartas[0]=c[4];
-                            p.cartas[4]=c[0];
+                            c[4]=p.getCarta5();
+                            p.carta1=c[4];
+                            p.carta5=c[0];
                         }
                         PersonajeSelec();
                         ResetDrop();
@@ -180,30 +177,27 @@ public class JuegoActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
                         Personaje p=listaPersonajesSelec.get(idPersonaje);
-                        String[] c=p.getCartas();
+                        Cartas[] c=new Cartas[5];
+                        c[1]=p.getCarta2();
                         if (drop[0]){
-                            p.carta2=carta1.getDrawable();
-                            p.carta1=carta2.getDrawable();
-                            p.cartas[1]=c[0];
-                            p.cartas[0]=c[1];
-                        }
+                            c[0]=p.getCarta1();
+                            p.carta2=c[0];
+                            p.carta1=c[1];
+                          }
                         if (drop[2]){
-                            p.carta2=carta3.getDrawable();
-                            p.carta3=carta2.getDrawable();
-                            p.cartas[1]=c[2];
-                            p.cartas[2]=c[1];
+                            c[2]=p.getCarta3();
+                            p.carta2=c[2];
+                            p.carta3=c[1];
                         }
                         if (drop[3]){
-                            p.carta2=carta4.getDrawable();
-                            p.carta4=carta2.getDrawable();
-                            p.cartas[1]=c[3];
-                            p.cartas[3]=c[1];
+                            c[3]=p.getCarta3();
+                            p.carta2=c[3];
+                            p.carta4=c[1];
                         }
                         if (drop[4]){
-                            p.carta2=carta5.getDrawable();
-                            p.carta5=carta2.getDrawable();
-                            p.cartas[1]=c[4];
-                            p.cartas[4]=c[1];
+                            c[4]=p.getCarta4();
+                            p.carta2=c[4];
+                            p.carta5=c[1];
                         }
                         PersonajeSelec();
                         ResetDrop();
@@ -214,7 +208,7 @@ public class JuegoActivity extends AppCompatActivity {
                 return true;
             }
         });
-        carta3.setOnLongClickListener(new View.OnLongClickListener() {
+        /*carta3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 drop[2]=true;
@@ -371,7 +365,7 @@ public class JuegoActivity extends AppCompatActivity {
                 }
                 return true;
             }
-        });
+        });*/
         modozombie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -436,8 +430,7 @@ public class JuegoActivity extends AppCompatActivity {
     private void SeleccionarCarta() {
         Intent intent=new Intent(JuegoActivity.this,CardsActivity.class);
         Personaje p=listaPersonajesSelec.get(idPersonaje);
-        String[] pasocartas=p.getCartas();
-        intent.putExtra(CardsActivity.Keycartas,pasocartas);
+        intent.putExtra(CardsActivity.Keycartas,p);
         startActivityForResult(intent,CardsActivity.pasarcartas);
     }
 
@@ -459,21 +452,22 @@ public class JuegoActivity extends AppCompatActivity {
     private void inicio() {
         for (int i=0; i<listaPersonajesSelec.size();i++){
             Personaje p=listaPersonajesSelec.get(i);
-            p.carta1=getDrawable(R.drawable.cartamano);
-            p.carta2=getDrawable(R.drawable.cartamano);
-            p.carta3=getDrawable(R.drawable.cartamano);
-            p.carta4=getDrawable(R.drawable.cartamano);
-            p.carta5=getDrawable(R.drawable.cartamano);
-            String[] inicial=new String[5];
-            for (int t=0;t<5;t++){
-                inicial[t]="cartamano";
+            for (int t=0;i<listacartas.size();i++){
+                Cartas c=listacartas.get(t);
+                if (c.getNombre().equals("cartamano")){
+                    p.setCarta1(c);
+                    p.setCarta2(c);
+                    p.setCarta3(c);
+                    p.setCarta4(c);
+                    p.setCarta5(c);
+                }
+                if (p.getNombre().equals("watts")){
+                    if (c.getNombre().equals("cbaseballbat")){
+                        p.setCarta1(c);
+                    }
+                }
             }
 
-            if (p.getNombre()=="watts"){
-                p.carta1=getDrawable(R.drawable.cbaseballbat);
-                inicial[0]="cbaseballbat";
-            }
-            p.setCartas(inicial);
 
         }
     }
@@ -500,11 +494,11 @@ public class JuegoActivity extends AppCompatActivity {
         habRoja3.setText(p.getHabRoja3());
         foto.setImageDrawable(p.getCara());
         nombre.setText(p.getNombre());
-        carta1.setImageDrawable(p.getCarta1());
-        carta2.setImageDrawable(p.getCarta2());
-        carta3.setImageDrawable(p.getCarta3());
-        carta4.setImageDrawable(p.getCarta4());
-        carta5.setImageDrawable(p.getCarta5());
+        carta1.setImageDrawable(p.getCarta1().getCarta());
+        carta2.setImageDrawable(p.getCarta2().getCarta());
+        carta3.setImageDrawable(p.getCarta3().getCarta());
+        carta4.setImageDrawable(p.getCarta4().getCarta());
+        carta5.setImageDrawable(p.getCarta5().getCarta());
         if (p.isModozombie()){
             modozombie.setChecked(true);
         }else{
@@ -720,26 +714,7 @@ public class JuegoActivity extends AppCompatActivity {
         if (requestCode==CardsActivity.pasarcartas){
             if (resultCode==RESULT_OK){
                 Personaje p=listaPersonajesSelec.get(idPersonaje);
-                String[] cartasPasadas=data.getExtras().getStringArray(KeyCartasSeleccionadas);
-                for (int i=0;i<listacartas.size();i++){
-                    Cartas c=listacartas.get(i);
-                    p.setCartas(cartasPasadas);
-                    if (c.getNombre().equals(cartasPasadas[0])){
-                        p.setCarta1(c.getCarta());
-                    }
-                    if (c.getNombre().equals(cartasPasadas[1])){
-                        p.setCarta2(c.getCarta());
-                    }
-                    if (c.getNombre().equals(cartasPasadas[2])){
-                        p.setCarta3(c.getCarta());
-                    }
-                    if (c.getNombre().equals(cartasPasadas[3])){
-                        p.setCarta4(c.getCarta());
-                    }
-                    if (c.getNombre().equals(cartasPasadas[4])){
-                        p.setCarta5(c.getCarta());
-                    }
-                }
+               // p=data.getExtras().getSerializable(KeyCartasSeleccionadas);
                 PersonajeSelec();
             }
         }
