@@ -1,16 +1,10 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
-import android.content.ClipData;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -23,15 +17,19 @@ public class JuegoActivity extends AppCompatActivity {
 
     public static String KeyListaPersonajes="key_listaPersonajes";
     public static String KeyCartasSeleccionadas="key_cartasSeleccionadas";
+    public static String KeyListaCartasDistancia="key_cartasDistancia";
+    public static String KeyListaCartasCuerpo="key_cartasCuerpo";
+    public static String KeyListaCartasEspeciales="key_cartasEspeciales";
+    public static String KeyListaCartasOtras="key_cartasOtras";
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
     private ImageView foto;
     private ArrayList<Personaje> listaPersonajes;
-    private ArrayList<Cartas> listacartas;
     private RecyclerView viewPersonajes;
     private LinearLayoutManager linlayoutmanager;
     private PersonajesAdapter adapterPersonajes;
     private int idPersonaje,idPersonajeInt;
     private ImageView carta1,carta2,carta3,carta4,carta5;
+    private ArrayList<Carta> CartasDistancia,CartasCuerpo,CartasEspeciales,CartasOtras;
     private boolean[] drop;
     private Switch modozombie;
     private boolean intercambiar;
@@ -58,7 +56,14 @@ public class JuegoActivity extends AppCompatActivity {
 
         listaPersonajes=new ArrayList<>();
         listaPersonajes= (ArrayList<Personaje>) getIntent().getSerializableExtra(KeyListaPersonajes);
-        listacartas=new ArrayList<>();
+        CartasDistancia=new ArrayList<>();
+        CartasDistancia=(ArrayList<Carta>)getIntent().getSerializableExtra(KeyListaCartasDistancia);
+        CartasCuerpo=new ArrayList<>();
+        CartasCuerpo=(ArrayList<Carta>)getIntent().getSerializableExtra(KeyListaCartasCuerpo);
+        CartasEspeciales=new ArrayList<>();
+        CartasEspeciales=(ArrayList<Carta>)getIntent().getSerializableExtra(KeyListaCartasEspeciales);
+        CartasOtras=new ArrayList<>();
+        CartasOtras=(ArrayList<Carta>)getIntent().getSerializableExtra(KeyListaCartasOtras);
 
         viewPersonajes =(RecyclerView)findViewById(R.id.ViewPersonajes);
         linlayoutmanager =new LinearLayoutManager(this);
@@ -69,13 +74,13 @@ public class JuegoActivity extends AppCompatActivity {
 
         drop=new boolean[5];
 
-        //PersonajeSelec();
+        PersonajeSelec();
 
 
-        /*adapterPersonajes.setOnClickListener(new View.OnClickListener() {
+        adapterPersonajes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (intercambiar){
+                /*if (intercambiar){
                     intercambiar=false;
                     idPersonajeInt=viewPersonajes.getChildAdapterPosition(view);
                     if (idPersonaje!=idPersonajeInt){
@@ -89,13 +94,13 @@ public class JuegoActivity extends AppCompatActivity {
                         startActivityForResult(intent,IntercambioActivity.pasarcartas);
                     }
 
-                }else{
+                }else{*/
                     idPersonaje=viewPersonajes.getChildAdapterPosition(view);
                     PersonajeSelec();
-                }
+                //}
 
             }
-        });*/
+        });
         /*carta1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -114,7 +119,7 @@ public class JuegoActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
                         Personaje p=listaPersonajesSelec.get(idPersonaje);
-                        Cartas[] c=new Cartas[5];
+                        Carta[] c=new Carta[5];
                         c[0]=p.getCarta1();
                         if (drop[1]){
                             c[1]=p.getCarta2();
@@ -163,7 +168,7 @@ public class JuegoActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
                         Personaje p=listaPersonajesSelec.get(idPersonaje);
-                        Cartas[] c=new Cartas[5];
+                        Carta[] c=new Carta[5];
                         c[1]=p.getCarta2();
                         if (drop[0]){
                             c[0]=p.getCarta1();
@@ -400,48 +405,72 @@ public class JuegoActivity extends AppCompatActivity {
     }
 
 
-    /*private void PersonajeSelec() {
+    private void PersonajeSelec() {
         Personaje p = listaPersonajes.get(idPersonaje);
-        habAzul.setText(p.getHabAzul());
-        habAmarilla.setText(p.getHabAmarilla());
-        habNaranja1.setText(p.getHabNaranja1());
-        habNaranja2.setText(p.getHabNaranja2());
-        habRoja1.setText(p.getHabRoja1());
-        habRoja2.setText(p.getHabRoja2());
-        habRoja3.setText(p.getHabRoja3());
-        foto.setImageDrawable(p.getCara());
         nombre.setText(p.getNombre());
-        carta1.setImageDrawable(p.getCarta1().getCarta());
-        carta2.setImageDrawable(p.getCarta2().getCarta());
-        carta3.setImageDrawable(p.getCarta3().getCarta());
-        carta4.setImageDrawable(p.getCarta4().getCarta());
-        carta5.setImageDrawable(p.getCarta5().getCarta());
         if (p.isModozombie()){
             modozombie.setChecked(true);
         }else{
             modozombie.setChecked(false);
         }
+        if (p.modozombie) {
+            habAzul.setText(p.getHabAzulZ());
+            habAmarilla.setText(p.getHabAmarillaZ());
+            habNaranja1.setText(p.getHabNaranja1Z());
+            habNaranja2.setText(p.getHabNaranja2Z());
+            habRoja1.setText(p.getHabRoja1Z());
+            habRoja2.setText(p.getHabRoja2Z());
+            habRoja3.setText(p.getHabRoja3Z());
+            foto.setImageResource(p.getCaraZ());
+        }else{
+            habAzul.setText(p.getHabAzul());
+            habAmarilla.setText(p.getHabAmarilla());
+            habNaranja1.setText(p.getHabNaranja1());
+            habNaranja2.setText(p.getHabNaranja2());
+            habRoja1.setText(p.getHabRoja1());
+            habRoja2.setText(p.getHabRoja2());
+            habRoja3.setText(p.getHabRoja3());
+            foto.setImageResource(p.getCara());
+        }
+        carta1.setImageResource(p.getCarta1().getCarta());
+        carta2.setImageResource(p.getCarta2().getCarta());
+        carta3.setImageResource(p.getCarta3().getCarta());
+        carta4.setImageResource(p.getCarta4().getCarta());
+        carta5.setImageResource(p.getCarta5().getCarta());
+
         if (!p.level[0]){
             habAmarilla.setBackgroundColor(getColor(android.R.color.white));
+        }else{
+            habAmarilla.setBackgroundColor(getColor(R.color.yellow));
         }
         if (!p.level[1]){
             habNaranja1.setBackgroundColor(getColor(android.R.color.white));
+        }else{
+            habNaranja1.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
         if (!p.level[2]){
             habNaranja2.setBackgroundColor(getColor(android.R.color.white));
+        }else {
+            habNaranja2.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
         if (!p.level[3]){
             habRoja1.setBackgroundColor(getColor(android.R.color.white));
+        }else{
+            habRoja1.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
         if (!p.level[4]){
             habRoja2.setBackgroundColor(getColor(android.R.color.white));
+        }else{
+            habRoja2.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
         if (!p.level[5]){
             habRoja3.setBackgroundColor(getColor(android.R.color.white));
+        }else{
+            habRoja3.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
     }
 
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

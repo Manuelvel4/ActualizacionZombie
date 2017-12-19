@@ -8,11 +8,11 @@ import java.io.Serializable;
  * Created by PortatilDani on 11/12/2017.
  */
 
-public class Cartas implements Serializable {
+public class Carta implements Serializable {
     public int carta;
     public String nombre;
 
-    public Cartas(int carta, String nombre) {
+    public Carta(int carta, String nombre) {
         this.carta = carta;
         this.nombre = nombre;
     }

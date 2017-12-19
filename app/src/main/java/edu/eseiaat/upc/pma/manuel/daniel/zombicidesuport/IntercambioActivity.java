@@ -9,7 +9,7 @@ public class IntercambioActivity extends AppCompatActivity {
     public static String Keycartas="key_cartas";
     public static String Keycartas2="key_cartas2";
     public static int pasarcartas=2;
-    private List<Cartas> listacartas;
+    private List<Carta> listacartas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,39 +21,39 @@ public class IntercambioActivity extends AppCompatActivity {
         DistanciaCartas();
     }
     private void DistanciaCartas() {
-        listacartas.add(new Cartas((R.drawable.cmashotgun),"cmashotgun"));
-        listacartas.add(new Cartas((R.drawable.ceviltwins),"ceviltwins"));
-        listacartas.add(new Cartas((R.drawable.cpistol),"cpistol"));
-        listacartas.add(new Cartas((R.drawable.crifle),"crifle"));
-        listacartas.add(new Cartas((R.drawable.csawedoff),"csawedoff"));
-        listacartas.add(new Cartas((R.drawable.cshotgun),"cshotgun"));
-        listacartas.add(new Cartas((R.drawable.csubmg),"csubmg"));
+        listacartas.add(new Carta((R.drawable.cmashotgun),"cmashotgun"));
+        listacartas.add(new Carta((R.drawable.ceviltwins),"ceviltwins"));
+        listacartas.add(new Carta((R.drawable.cpistol),"cpistol"));
+        listacartas.add(new Carta((R.drawable.crifle),"crifle"));
+        listacartas.add(new Carta((R.drawable.csawedoff),"csawedoff"));
+        listacartas.add(new Carta((R.drawable.cshotgun),"cshotgun"));
+        listacartas.add(new Carta((R.drawable.csubmg),"csubmg"));
     }
     private void CuerpoCartas() {
-        listacartas.add(new Cartas((R.drawable.cbaseballbat),"cbaseballbat"));
-        listacartas.add(new Cartas((R.drawable.cchainsaw),"cchainsaw"));
-        listacartas.add(new Cartas((R.drawable.ccrowbar),"ccrowbar"));
-        listacartas.add(new Cartas((R.drawable.cfireaxe),"cfireaxe"));
-        listacartas.add(new Cartas((R.drawable.ckatana),"ckatana"));
-        listacartas.add(new Cartas((R.drawable.cmachete),"cmachete"));
-        listacartas.add(new Cartas((R.drawable.cpan),"cpan"));
-        listacartas.add(new Cartas((R.drawable.cmashotgun),"cmashotgun"));
+        listacartas.add(new Carta((R.drawable.cbaseballbat),"cbaseballbat"));
+        listacartas.add(new Carta((R.drawable.cchainsaw),"cchainsaw"));
+        listacartas.add(new Carta((R.drawable.ccrowbar),"ccrowbar"));
+        listacartas.add(new Carta((R.drawable.cfireaxe),"cfireaxe"));
+        listacartas.add(new Carta((R.drawable.ckatana),"ckatana"));
+        listacartas.add(new Carta((R.drawable.cmachete),"cmachete"));
+        listacartas.add(new Carta((R.drawable.cpan),"cpan"));
+        listacartas.add(new Carta((R.drawable.cmashotgun),"cmashotgun"));
     }
     private void EspecialesCartas() {
-        listacartas.add(new Cartas((R.drawable.cgoaliemask),"cgoaliemask"));
-        listacartas.add(new Cartas((R.drawable.cflashlight),"cflashlight"));
-        listacartas.add(new Cartas((R.drawable.cplentyofammo),"cplentyofammo"));
-        listacartas.add(new Cartas((R.drawable.cplentyofammoshotgun),"cplentyofammoshotgun"));
-        listacartas.add(new Cartas((R.drawable.cscope),"cscope"));
-        listacartas.add(new Cartas((R.drawable.cmolotov),"cmolotov"));
+        listacartas.add(new Carta((R.drawable.cgoaliemask),"cgoaliemask"));
+        listacartas.add(new Carta((R.drawable.cflashlight),"cflashlight"));
+        listacartas.add(new Carta((R.drawable.cplentyofammo),"cplentyofammo"));
+        listacartas.add(new Carta((R.drawable.cplentyofammoshotgun),"cplentyofammoshotgun"));
+        listacartas.add(new Carta((R.drawable.cscope),"cscope"));
+        listacartas.add(new Carta((R.drawable.cmolotov),"cmolotov"));
     }
     private void OtrosCartas() {
-        listacartas.add(new Cartas((R.drawable.cbagofrice),"cbagofrice"));
-        listacartas.add(new Cartas((R.drawable.ccannedfood),"ccannedfood"));
-        listacartas.add(new Cartas((R.drawable.cwater),"cwater"));
-        listacartas.add(new Cartas((R.drawable.cgasoline),"cgasoline"));
-        listacartas.add(new Cartas((R.drawable.cglassbottle),"cglassbottle"));
-        listacartas.add(new Cartas((R.drawable.cwound),"cwound"));
-        listacartas.add(new Cartas((R.drawable.cartamano),"cartamano"));
+        listacartas.add(new Carta((R.drawable.cbagofrice),"cbagofrice"));
+        listacartas.add(new Carta((R.drawable.ccannedfood),"ccannedfood"));
+        listacartas.add(new Carta((R.drawable.cwater),"cwater"));
+        listacartas.add(new Carta((R.drawable.cgasoline),"cgasoline"));
+        listacartas.add(new Carta((R.drawable.cglassbottle),"cglassbottle"));
+        listacartas.add(new Carta((R.drawable.cwound),"cwound"));
+        listacartas.add(new Carta((R.drawable.cartamano),"cartamano"));
     }
 }

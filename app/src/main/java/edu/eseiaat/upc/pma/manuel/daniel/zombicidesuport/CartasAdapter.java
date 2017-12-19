@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -15,14 +14,14 @@ import java.util.List;
  */
 
 public class CartasAdapter extends RecyclerView.Adapter<CartasAdapter.ViewHolder> implements View.OnClickListener,View.OnLongClickListener{
-        private List<Cartas> ListaCartas;
+        private List<Carta> listaCartas;
         private Context context;
         private View.OnClickListener listener;
         private View.OnLongClickListener longlistener;
 
-        public CartasAdapter(Context c, List<Cartas> list) {
+        public CartasAdapter(Context c, List<Carta> list) {
             this.context = c;
-            ListaCartas = list;
+            listaCartas = list;
         }
 
 
@@ -38,13 +37,13 @@ public class CartasAdapter extends RecyclerView.Adapter<CartasAdapter.ViewHolder
 
         @Override
         public void onBindViewHolder(edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.CartasAdapter.ViewHolder holder, int position) {
-            Cartas item = (Cartas) ListaCartas.get(position);
+            Carta item = (Carta) listaCartas.get(position);
             holder.carta.setImageResource(item.getCarta());
         }
 
         @Override
         public int getItemCount() {
-            return ListaCartas.size();
+            return listaCartas.size();
         }
 
 

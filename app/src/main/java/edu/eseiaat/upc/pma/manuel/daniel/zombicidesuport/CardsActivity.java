@@ -1,14 +1,10 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
-import android.content.ClipData;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -17,7 +13,7 @@ public class CardsActivity extends AppCompatActivity {
     public static String Keycartas="key_cartas";
     public static int pasarcartas=1;
 
-    private ArrayList<Cartas> listacartas;
+    private ArrayList<Carta> listacartas;
     private CartasAdapter adaptercartas;
     private RecyclerView viewCartas;
     private LinearLayoutManager linlayoutmanager;
@@ -139,7 +135,7 @@ public class CardsActivity extends AppCompatActivity {
     private void CrearCartas() {
 
         for (int i=0;i<listacartas.size();i++){
-            Cartas c=listacartas.get(i);
+            Carta c=listacartas.get(i);
             if (c.getNombre().equals()){
                 carta1.setImageDrawable(c.getCarta());
             }
@@ -158,7 +154,7 @@ public class CardsActivity extends AppCompatActivity {
         }
     }
     private void Seleccionar() {
-        Cartas c=listacartas.get(idcarta);
+        Carta c=listacartas.get(idcarta);
         cartaselect=c.getCarta();
         nombrecartaselect=c.getNombre();
 
@@ -171,40 +167,40 @@ public class CardsActivity extends AppCompatActivity {
     }
 
     private void DistanciaCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ceviltwins),"ceviltwins"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cpistol),"cpistol"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.crifle),"crifle"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.csawedoff),"csawedoff"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cshotgun),"cshotgun"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.csubmg),"csubmg"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
+        listacartas.add(new Carta(getDrawable(R.drawable.ceviltwins),"ceviltwins"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cpistol),"cpistol"));
+        listacartas.add(new Carta(getDrawable(R.drawable.crifle),"crifle"));
+        listacartas.add(new Carta(getDrawable(R.drawable.csawedoff),"csawedoff"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cshotgun),"cshotgun"));
+        listacartas.add(new Carta(getDrawable(R.drawable.csubmg),"csubmg"));
     }
     private void CuerpoCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cbaseballbat),"cbaseballbat"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cchainsaw),"cchainsaw"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ccrowbar),"ccrowbar"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cfireaxe),"cfireaxe"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ckatana),"ckatana"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmachete),"cmachete"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cpan),"cpan"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cbaseballbat),"cbaseballbat"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cchainsaw),"cchainsaw"));
+        listacartas.add(new Carta(getDrawable(R.drawable.ccrowbar),"ccrowbar"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cfireaxe),"cfireaxe"));
+        listacartas.add(new Carta(getDrawable(R.drawable.ckatana),"ckatana"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cmachete),"cmachete"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cpan),"cpan"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cmashotgun),"cmashotgun"));
     }
     private void EspecialesCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cgoaliemask),"cgoaliemask"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cflashlight),"cflashlight"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cplentyofammo),"cplentyofammo"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cplentyofammoshotgun),"cplentyofammoshotgun"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cscope),"cscope"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cmolotov),"cmolotov"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cgoaliemask),"cgoaliemask"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cflashlight),"cflashlight"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cplentyofammo),"cplentyofammo"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cplentyofammoshotgun),"cplentyofammoshotgun"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cscope),"cscope"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cmolotov),"cmolotov"));
     }
     private void OtrosCartas() {
-        listacartas.add(new Cartas(getDrawable(R.drawable.cbagofrice),"cbagofrice"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.ccannedfood),"ccannedfood"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cwater),"cwater"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cgasoline),"cgasoline"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cglassbottle),"cglassbottle"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cwound),"cwound"));
-        listacartas.add(new Cartas(getDrawable(R.drawable.cartamano),"cartamano"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cbagofrice),"cbagofrice"));
+        listacartas.add(new Carta(getDrawable(R.drawable.ccannedfood),"ccannedfood"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cwater),"cwater"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cgasoline),"cgasoline"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cglassbottle),"cglassbottle"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cwound),"cwound"));
+        listacartas.add(new Carta(getDrawable(R.drawable.cartamano),"cartamano"));
     }
 
     public void Todas(View view) {

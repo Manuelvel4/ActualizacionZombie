@@ -1,7 +1,5 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import java.io.Serializable;
 
 /**
@@ -13,11 +11,12 @@ public class Personaje implements Serializable {
     public int foto,cara;
     public String habAzulZ, habAmarillaZ, habNaranja1Z,habNaranja2Z, habRoja1Z,HabRoja2Z,habRoja3Z;
     public int fotoZ,caraZ;
-    public Cartas carta1,carta2,carta3,carta4,carta5;
+    public Carta carta1,carta2,carta3,carta4,carta5;
     public boolean invisible,modozombie;
     public boolean[] level;
+    public int puntuacion;
 
-    public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, int foto, int cara, String habAzulZ, String habAmarillaZ, String habNaranja1Z, String habNaranja2Z, String habRoja1Z, String habRoja2Z, String habRoja3Z, int fotoZ, int caraZ) {
+    public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, int foto, int cara, String habAzulZ, String habAmarillaZ, String habNaranja1Z, String habNaranja2Z, String habRoja1Z, String habRoja2Z, String habRoja3Z, int fotoZ, int caraZ, Carta carta1, Carta carta2, Carta carta3, Carta carta4, Carta carta5, boolean invisible, boolean modozombie, boolean[] level, int puntuacion) {
         this.nombre = nombre;
         this.habAzul = habAzul;
         this.habAmarilla = habAmarilla;
@@ -37,6 +36,23 @@ public class Personaje implements Serializable {
         this.habRoja3Z = habRoja3Z;
         this.fotoZ = fotoZ;
         this.caraZ = caraZ;
+        this.carta1 = carta1;
+        this.carta2 = carta2;
+        this.carta3 = carta3;
+        this.carta4 = carta4;
+        this.carta5 = carta5;
+        this.invisible = invisible;
+        this.modozombie = modozombie;
+        this.level = level;
+        this.puntuacion = puntuacion;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public String getNombre() {
@@ -115,43 +131,43 @@ public class Personaje implements Serializable {
         return caraZ;
     }
 
-    public Cartas getCarta1() {
+    public Carta getCarta1() {
         return carta1;
     }
 
-    public void setCarta1(Cartas carta1) {
+    public void setCarta1(Carta carta1) {
         this.carta1 = carta1;
     }
 
-    public Cartas getCarta2() {
+    public Carta getCarta2() {
         return carta2;
     }
 
-    public void setCarta2(Cartas carta2) {
+    public void setCarta2(Carta carta2) {
         this.carta2 = carta2;
     }
 
-    public Cartas getCarta3() {
+    public Carta getCarta3() {
         return carta3;
     }
 
-    public void setCarta3(Cartas carta3) {
+    public void setCarta3(Carta carta3) {
         this.carta3 = carta3;
     }
 
-    public Cartas getCarta4() {
+    public Carta getCarta4() {
         return carta4;
     }
 
-    public void setCarta4(Cartas carta4) {
+    public void setCarta4(Carta carta4) {
         this.carta4 = carta4;
     }
 
-    public Cartas getCarta5() {
+    public Carta getCarta5() {
         return carta5;
     }
 
-    public void setCarta5(Cartas carta5) {
+    public void setCarta5(Carta carta5) {
         this.carta5 = carta5;
     }
 
