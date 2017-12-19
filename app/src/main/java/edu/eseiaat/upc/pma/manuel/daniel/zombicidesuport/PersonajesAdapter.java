@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PersonajesAdapter extends RecyclerView.Adapter<PersonajesAdapter.ViewHolder> implements View.OnClickListener,View.OnLongClickListener{
 
-    private List<Personaje> ListaPersonajes;
+    protected List<Personaje> ListaPersonajes;
     private Context context;
     private View.OnClickListener listener;
     private View.OnLongClickListener longlistener;
@@ -37,11 +37,11 @@ public class PersonajesAdapter extends RecyclerView.Adapter<PersonajesAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Personaje item = (Personaje) ListaPersonajes.get(position);
+        Personaje item = ListaPersonajes.get(position);
         if (item.modozombie){
-            holder.cara.setImageDrawable(item.getCaraZ());
+            holder.cara.setImageResource(item.getCaraZ());
         }else{
-            holder.cara.setImageDrawable(item.getCara());
+            holder.cara.setImageResource(item.getCara());
         }
         holder.nombre.setText(item.getNombre());
 

@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     public void Crear(View view) {
         Intent intent=new Intent(this,CrearActivity.class);
         startActivity(intent);
+
         finish();
     }
 }

@@ -39,7 +39,7 @@ public class CartasAdapter extends RecyclerView.Adapter<CartasAdapter.ViewHolder
         @Override
         public void onBindViewHolder(edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.CartasAdapter.ViewHolder holder, int position) {
             Cartas item = (Cartas) ListaCartas.get(position);
-            holder.carta.setImageDrawable(item.getCarta());
+            holder.carta.setImageResource(item.getCarta());
         }
 
         @Override

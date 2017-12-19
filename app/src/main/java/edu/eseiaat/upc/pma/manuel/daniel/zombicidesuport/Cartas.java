@@ -1,25 +1,27 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import java.io.Serializable;
 
 /**
  * Created by PortatilDani on 11/12/2017.
  */
 
-public class Cartas {
-    public Drawable carta;
+public class Cartas implements Serializable {
+    public int carta;
     public String nombre;
 
-    public Cartas(Drawable carta, String nombre) {
+    public Cartas(int carta, String nombre) {
         this.carta = carta;
         this.nombre = nombre;
     }
 
-    public Drawable getCarta() {
+    public int getCarta() {
         return carta;
     }
 
-    public void setCarta(Drawable carta) {
+    public void setCarta(int carta) {
         this.carta = carta;
     }
 

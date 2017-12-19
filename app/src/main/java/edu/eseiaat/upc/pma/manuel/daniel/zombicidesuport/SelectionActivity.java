@@ -80,7 +80,7 @@ public class SelectionActivity extends AppCompatActivity{
         viewPersonajes.setLayoutManager(linlayoutmanager);
 
 
-        adapterPersonajes =new PersonajesAdapter(this,listaPersonajes);
+        adapterPersonajes =new PersonajesInvisiblesAdapter(this,listaPersonajes);
         viewPersonajes.setAdapter(adapterPersonajes);
 
         listaPersonajesSelec =new ArrayList<>();
@@ -231,7 +231,7 @@ public class SelectionActivity extends AppCompatActivity{
             habRoja1.setText(p.getHabRoja1Z());
             habRoja2.setText(p.getHabRoja2Z());
             habRoja3.setText(p.getHabRoja3Z());
-            descripcionPersonaje.setImageDrawable(p.getFotoZ());
+            descripcionPersonaje.setImageResource(p.getFotoZ());
         }else{
             habAzul.setText(p.getHabAzul());
             habAmarilla.setText(p.getHabAmarilla());
@@ -240,7 +240,7 @@ public class SelectionActivity extends AppCompatActivity{
             habRoja1.setText(p.getHabRoja1());
             habRoja2.setText(p.getHabRoja2());
             habRoja3.setText(p.getHabRoja3());
-            descripcionPersonaje.setImageDrawable(p.getFoto());
+            descripcionPersonaje.setImageResource(p.getFoto());
         }
 
     }
@@ -253,8 +253,8 @@ public class SelectionActivity extends AppCompatActivity{
         String habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
         String habroja2=getString( R.string.mas1accionDeCombateGratuita);
         String habroja3=getString(R.string.mas1alasTiradasDeCombate);
-        Drawable foto=getDrawable(R.drawable.pwatts);
-        Drawable cara=getDrawable(R.drawable.pwattscara);
+        int foto=R.drawable.pwatts;
+        int cara=R.drawable.pwattscara;
         String habazulZ=getString(R.string.EmpezarConBateBeisbol);
         String habamarillaZ=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
         String habnaranja1Z=getString(R.string.FrenesiCuerpoACuerpo);
@@ -262,8 +262,8 @@ public class SelectionActivity extends AppCompatActivity{
         String habroja1Z=getString(R.string.dosZonasPorAccionDeMovimiento);
         String habroja2Z=getString( R.string.mas1alasTiradasDeCombate);
         String habroja3Z=getString(R.string.FrenesiCombate);
-        Drawable fotoZ=getDrawable(R.drawable.pwattszombie);
-        Drawable caraZ=getDrawable(R.drawable.pwattscarazombie);
+        int fotoZ=R.drawable.pwattszombie;
+        int caraZ=R.drawable.pwattscarazombie;
         watts=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Joshua";
@@ -274,8 +274,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1=getString(R.string.dosZonasPorAccionDeMovimiento);
         habroja2=getString( R.string.mas1accionDeCombateGratuita);
         habroja3=getString(R.string.mas1alasTiradasDeCombate);
-        foto=getDrawable(R.drawable.pjoshua);
-        cara=getDrawable(R.drawable.pjoshuacara);
+        foto=(R.drawable.pjoshua);
+        cara=(R.drawable.pjoshuacara);
         habazulZ=getString(R.string.Socorrista);
         habamarillaZ=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
         habnaranja1Z=getString(R.string.mas1aLasTiradasCuerpoACuerpo);
@@ -283,8 +283,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1Z=getString(R.string.mas1aLasTiradasADistancia);
         habroja2Z=getString( R.string.LiderNato);
         habroja3Z=getString(R.string.Regeneracion);
-        fotoZ=getDrawable(R.drawable.pjoshuazombie);
-        caraZ=getDrawable(R.drawable.pjoshuacarazombie);
+        fotoZ=(R.drawable.pjoshuazombie);
+        caraZ=(R.drawable.pjoshuacarazombie);
         joshua=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Shannon";
@@ -295,8 +295,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1=getString(R.string.mas1dadoCombate);
         habroja2=getString( R.string.mas1accionDeCombateGratuita);
         habroja3=getString(R.string.Escurridiza);
-        foto=getDrawable(R.drawable.pshannon);
-        cara=getDrawable(R.drawable.pshannoncara);
+        foto=(R.drawable.pshannon);
+        cara=(R.drawable.pshannoncara);
         habazulZ=getString(R.string.DisparoABocajarro);
         habamarillaZ=getString(R.string.mas1accionADistanciaGratuita);
         habnaranja1Z=getString(R.string.FrenesiAdistancia);
@@ -304,8 +304,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1Z=getString(R.string.mas1dadoCombate);
         habroja2Z=getString( R.string.Escurridiza);
         habroja3Z=getString(R.string.SegadoraCombate);
-        fotoZ=getDrawable(R.drawable.pshannonzombie);
-        caraZ=getDrawable(R.drawable.pshannoncarazombie);
+        fotoZ=(R.drawable.pshannonzombie);
+        caraZ=(R.drawable.pshannoncarazombie);
         shannon=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Grindlock";
@@ -316,8 +316,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1=getString(R.string.mas1AlDañoCuerpoACuerpo);
         habroja2=getString( R.string.EsoEsTodoLoQueTienes);
         habroja3=getString(R.string.seisEnElDadoMas1DadoDeCombate);
-        foto=getDrawable(R.drawable.pgrindlock);
-        cara=getDrawable(R.drawable.pgrindlockcara);
+        foto=(R.drawable.pgrindlock);
+        cara=(R.drawable.pgrindlockcara);
         habazulZ=getString(R.string.Provocacion);
         habamarillaZ=getString(R.string.mas1accionDeCombateCuerpoACuerpoGratuita);
         habnaranja1Z=getString(R.string.VinculoZombi);
@@ -325,8 +325,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1Z=getString(R.string.mas1AlDañoCuerpoACuerpo);
         habroja2Z=getString( R.string.SegadoraCombate);
         habroja3Z=getString(R.string.seisEnElDadoMas1DadoDeCombate);
-        fotoZ=getDrawable(R.drawable.pgrindlockzombie);
-        caraZ=getDrawable(R.drawable.pgrindlockcarazombie);
+        fotoZ=(R.drawable.pgrindlockzombie);
+        caraZ=(R.drawable.pgrindlockcarazombie);
         grindlock=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Belle";
@@ -337,8 +337,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1=getString(R.string.mas1dadoCombate);
         habroja2=getString( R.string.mas1accionDeMovimientoGratuita);
         habroja3=getString(R.string.Ambidiestra);
-        foto=getDrawable(R.drawable.pbelle);
-        cara=getDrawable(R.drawable.pbellecara);
+        foto=(R.drawable.pbelle);
+        cara=(R.drawable.pbellecara);
         habazulZ=getString(R.string.mas1accionDeMovimientoGratuita);
         habamarillaZ=getString(R.string.mas1accionADistanciaGratuita);
         habnaranja1Z=getString(R.string.mas1dadoADistancia);
@@ -346,8 +346,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1Z=getString(R.string.mas1dadoCombate);
         habroja2Z=getString( R.string.Regeneracion);
         habroja3Z=getString(R.string.Ambidiestra);
-        fotoZ=getDrawable(R.drawable.pbellezombie);
-        caraZ=getDrawable(R.drawable.pbellecarazombie);
+        fotoZ=(R.drawable.pbellezombie);
+        caraZ=(R.drawable.pbellecarazombie);
         belle=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
 
         nombre="Kim";
@@ -358,8 +358,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1=getString(R.string.mas1accionDeCombateGratuita);
         habroja2=getString( R.string.mas1alasTiradasDeCombate);
         habroja3=getString(R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
-        foto=getDrawable(R.drawable.pkim);
-        cara=getDrawable(R.drawable.pkimcara);
+        foto=(R.drawable.pkim);
+        cara=(R.drawable.pkimcara);
         habazulZ=getString(R.string.Afortunada);
         habamarillaZ=getString(R.string.mas1accionADistanciaGratuita);
         habnaranja1Z=getString(R.string.SegadoraCombate);
@@ -367,8 +367,8 @@ public class SelectionActivity extends AppCompatActivity{
         habroja1Z=getString(R.string.mas1alasTiradasDeCombate);
         habroja2Z=getString( R.string.seisEnElDadoMas1DadoCuerpoACuerpo);
         habroja3Z=getString(R.string.VinculoZombi);
-        fotoZ=getDrawable(R.drawable.pkimzombie);
-        caraZ=getDrawable(R.drawable.pkimcarazombie);
+        fotoZ=(R.drawable.pkimzombie);
+        caraZ=(R.drawable.pkimcarazombie);
         kim=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ);
     }
     public void Atras(View view) {

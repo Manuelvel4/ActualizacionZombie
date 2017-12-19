@@ -1,5 +1,6 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import java.io.Serializable;
 
@@ -9,14 +10,14 @@ import java.io.Serializable;
 
 public class Personaje implements Serializable {
     public String nombre,habAzul, habAmarilla, habNaranja1,habNaranja2, habRoja1,HabRoja2,habRoja3;
-    public Drawable foto,cara;
+    public int foto,cara;
     public String habAzulZ, habAmarillaZ, habNaranja1Z,habNaranja2Z, habRoja1Z,HabRoja2Z,habRoja3Z;
-    public Drawable fotoZ,caraZ;
+    public int fotoZ,caraZ;
     public Cartas carta1,carta2,carta3,carta4,carta5;
     public boolean invisible,modozombie;
     public boolean[] level;
 
-    public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, Drawable foto, Drawable cara, String habAzulZ, String habAmarillaZ, String habNaranja1Z, String habNaranja2Z, String habRoja1Z, String habRoja2Z, String habRoja3Z, Drawable fotoZ, Drawable caraZ) {
+    public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, int foto, int cara, String habAzulZ, String habAmarillaZ, String habNaranja1Z, String habNaranja2Z, String habRoja1Z, String habRoja2Z, String habRoja3Z, int fotoZ, int caraZ) {
         this.nombre = nombre;
         this.habAzul = habAzul;
         this.habAmarilla = habAmarilla;
@@ -70,11 +71,11 @@ public class Personaje implements Serializable {
         return habRoja3;
     }
 
-    public Drawable getFoto() {
+    public int getFoto() {
         return foto;
     }
 
-    public Drawable getCara() {
+    public int getCara() {
         return cara;
     }
 
@@ -106,11 +107,11 @@ public class Personaje implements Serializable {
         return habRoja3Z;
     }
 
-    public Drawable getFotoZ() {
+    public int getFotoZ() {
         return fotoZ;
     }
 
-    public Drawable getCaraZ() {
+    public int getCaraZ() {
         return caraZ;
     }
 
