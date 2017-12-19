@@ -87,7 +87,7 @@ public class JuegoActivity extends AppCompatActivity {
                         Intent intent=new Intent(JuegoActivity.this,IntercambioActivity.class);
                         Personaje p=listaPersonajesSelec.get(idPersonaje);
                         String[] pasocartas=p.getCartas();
-                        intent.putExtra(IntercambioActivity.Keycartas,pasocartas);
+                        intent.putExtra(IntercambioActivity.KeyPersonaje,pasocartas);
                         Personaje q=listaPersonajesSelec.get(idPersonajeInt);
                         String[] pasocartas2=q.getCartas();
                         intent.putExtra(IntercambioActivity.Keycartas2,pasocartas2);
@@ -357,10 +357,13 @@ public class JuegoActivity extends AppCompatActivity {
                 return true;
             }
         });*/
-       /* modozombie.setOnClickListener(new View.OnClickListener() {
+        modozombie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Personaje p=listaPersonajes.get(idPersonaje);
+                p.modozombie=!p.modozombie;
+                PersonajeSelec();
+                adapterPersonajes.notifyDataSetChanged();
             }
         });
         carta1.setOnClickListener(new View.OnClickListener() {
@@ -393,26 +396,23 @@ public class JuegoActivity extends AppCompatActivity {
                 SeleccionarCarta();
             }
         });
-
-
     }
 
     private void SeleccionarCarta() {
         Intent intent=new Intent(JuegoActivity.this,CardsActivity.class);
-        Personaje p=listaPersonajesSelec.get(idPersonaje);
-        intent.putExtra(CardsActivity.Keycartas,p);
-        startActivityForResult(intent,CardsActivity.pasarcartas);*/
+        Personaje p=listaPersonajes.get(idPersonaje);
+        intent.putExtra(CardsActivity.KeyPersonaje,p);
+        intent.putExtra(CardsActivity.KeyListaCartasDistancia,CartasDistancia );
+        intent.putExtra(CardsActivity.KeyListaCartasCuerpo, CartasCuerpo);
+        intent.putExtra(CardsActivity.KeyListaCartasEspeciales,CartasEspeciales);
+        intent.putExtra(CardsActivity.KeyListaCartasOtras, CartasOtras);
+        startActivityForResult(intent,CardsActivity.pasarcartas);
     }
 
 
     private void PersonajeSelec() {
         Personaje p = listaPersonajes.get(idPersonaje);
         nombre.setText(p.getNombre());
-        if (p.isModozombie()){
-            modozombie.setChecked(true);
-        }else{
-            modozombie.setChecked(false);
-        }
         if (p.modozombie) {
             habAzul.setText(p.getHabAzulZ());
             habAmarilla.setText(p.getHabAmarillaZ());
@@ -470,7 +470,7 @@ public class JuegoActivity extends AppCompatActivity {
         }
     }
 
-/*
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -482,7 +482,7 @@ public class JuegoActivity extends AppCompatActivity {
 
     }
 
-    public void Intercambiar(View view) {
+   /* public void Intercambiar(View view) {
         viewPersonajes.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         intercambiar=true;
     }*/
