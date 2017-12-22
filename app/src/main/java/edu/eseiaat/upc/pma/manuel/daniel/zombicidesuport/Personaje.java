@@ -209,5 +209,7 @@ public class Personaje implements Serializable {
         p.setCarta(c1,this.getCarta(c2));
         this.setCarta(c2,aux);
     }
+
+
 }
 

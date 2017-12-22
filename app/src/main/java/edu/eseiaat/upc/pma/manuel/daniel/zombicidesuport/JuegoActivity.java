@@ -41,12 +41,14 @@ public class JuegoActivity extends AppCompatActivity {
     RecyclerView recy;
     Button btn_plus, btn_less;
     int CONTADOR_VUELTA=0;
-    int numero =1;
+    int numero =0;
     int numero_less =0;
     boolean primera_vuelta=false;
     boolean end= false;
     boolean btn_mas_pulsado=false;
     boolean btn_menos_pulsado =false;
+    private AdaptadorBarra adaptarBarra;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class JuegoActivity extends AppCompatActivity {
         viewPersonajes.setAdapter(adapterPersonajes);
         idPersonaje=0;
 
-        PersonajeSelec();
+
 
         lista =new ArrayList<>();
         lista_Draw = new ArrayList<>();
@@ -98,14 +100,17 @@ public class JuegoActivity extends AppCompatActivity {
 
         recy.setLayoutManager( new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         llenar_DATOS();
-        final AdaptadorBarra adaptarBarra = new AdaptadorBarra(lista);
+        adaptarBarra = new AdaptadorBarra(lista);
         recy.setAdapter(adaptarBarra);
+
+        PersonajeSelec();
 
         btn_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Move_plus(adaptarBarra);
-                if (end) btn_plus.setEnabled(false);
+                Personaje p=listaPersonajes.get(idPersonaje);
+                p.puntuacion++;
+                PersonajeSelec();
             }
         });
 
@@ -113,7 +118,9 @@ public class JuegoActivity extends AppCompatActivity {
         btn_less.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numero_less>0) move_less(adaptarBarra);
+                Personaje p=listaPersonajes.get(idPersonaje);
+                p.puntuacion--;
+                PersonajeSelec();
             }
         });
 
@@ -363,32 +370,49 @@ public class JuegoActivity extends AppCompatActivity {
         carta4.setImageResource(p.getCarta4().getCarta());
         carta5.setImageResource(p.getCarta5().getCarta());
 
-        if (!p.level[0]){
+        lista.clear();
+        llenar_DATOS();
+        for (int i=0;i<p.puntuacion;i++){
+            lista.set(i, new BARRA(lista_red.get(i)));
+            lista.set(i+1, new BARRA(R.drawable.puntero, lista_red.get(i+1)));
+        }
+        adaptarBarra.notifyDataSetChanged();
+
+        if (p.puntuacion<7){
             habAmarilla.setBackgroundColor(getColor(android.R.color.white));
+
         }else{
             habAmarilla.setBackgroundColor(getColor(R.color.yellow));
         }
-        if (!p.level[1]){
-            habNaranja1.setBackgroundColor(getColor(android.R.color.white));
+        if (!p.level[0]){
+            if (p.puntuacion<19){
+                habNaranja1.setBackgroundColor(getColor(android.R.color.white));
+            }else{
+                habNaranja1.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+            }
         }else{
             habNaranja1.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
-        if (!p.level[2]){
-            habNaranja2.setBackgroundColor(getColor(android.R.color.white));
+        if (!p.level[1]){
+            if (p.puntuacion<19){
+                habNaranja2.setBackgroundColor(getColor(android.R.color.white));
+            }else{
+                habNaranja2.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+            }
         }else {
             habNaranja2.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
-        if (!p.level[3]){
+        if (!p.level[2]){
             habRoja1.setBackgroundColor(getColor(android.R.color.white));
         }else{
             habRoja1.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
-        if (!p.level[4]){
+        if (!p.level[3]){
             habRoja2.setBackgroundColor(getColor(android.R.color.white));
         }else{
             habRoja2.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
-        if (!p.level[5]){
+        if (!p.level[4]){
             habRoja3.setBackgroundColor(getColor(android.R.color.white));
         }else{
             habRoja3.setBackgroundColor(getColor(android.R.color.holo_red_dark));
@@ -533,68 +557,21 @@ public class JuegoActivity extends AppCompatActivity {
 
     }
     private void move_less(AdaptadorBarra adaptarBarra) {
-
-        if(btn_mas_pulsado&&!primera_vuelta) numero_less =numero-1;
-        if (primera_vuelta){
-            numero_less = 43;
-            primera_vuelta=false;
-            CONTADOR_VUELTA --;
-        }
-        if(end) {numero_less=43;end =false;}
-
-        if(numero_less==43){
-            lista.set(43,new BARRA(lista_red.get(43)));
-            lista.set(42,new BARRA(R.drawable.puntero,lista_red.get(42)));
-            btn_plus.setEnabled(true);
-            primera_vuelta = false;
-            numero_less = 42;
-            numero =43;
-        }
-
-        else if (numero_less>0){
-            lista.set(numero_less,new BARRA(lista_red.get(numero_less)));
-            lista.set(numero_less-1,new BARRA(R.drawable.puntero,lista_red.get(numero_less-1)));
-            btn_plus.setEnabled(true);
-            numero_less--;
-        }
-
-        btn_menos_pulsado = true;
-        btn_mas_pulsado =false;
-        adaptarBarra.notifyDataSetChanged();
-    }
-    private void Move_plus(AdaptadorBarra adaptarBarra) {
-
-
-        if (!primera_vuelta) {
-            if(btn_menos_pulsado) numero =numero_less +1;
+        lista.clear();
+        llenar_DATOS();
+        for (numero=1;numero<20;numero++){
             lista.set(numero - 1, new BARRA(lista_red.get(numero - 1)));
             lista.set(numero, new BARRA(R.drawable.puntero, lista_red.get(numero)));
 
-            if (numero < 43){
-                numero++;numero_less++;
-            }else {
-                if (CONTADOR_VUELTA < 1) {
-                    numero = 1;
-                    CONTADOR_VUELTA++;
-                    primera_vuelta = true;
-
-                } else {
-
-                    end = true;}
-            }
-
-
-        }else{
-            lista.set(43, new BARRA(lista_red.get(43)));
-            lista.set(0, new BARRA(R.drawable.puntero, lista_red.get(0)));
-
-            primera_vuelta = false;
-            numero_less =0;
-
+        }
+        adaptarBarra.notifyDataSetChanged();
+    }
+    private void Move_plus(AdaptadorBarra adaptarBarra) {
+        for (numero=1;numero<30;numero++){
+            lista.set(numero - 1, new BARRA(lista_red.get(numero - 1)));
+            lista.set(numero, new BARRA(R.drawable.puntero, lista_red.get(numero)));
         }
 
-        btn_mas_pulsado =true;
-        btn_menos_pulsado = false;
         adaptarBarra.notifyDataSetChanged();
     }
 

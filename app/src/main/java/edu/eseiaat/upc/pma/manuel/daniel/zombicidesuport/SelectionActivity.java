@@ -314,7 +314,7 @@ public class SelectionActivity extends AppCompatActivity{
         Carta carta5=cartamano;
         boolean invisible=false;
         boolean modozombie=false;
-        boolean[] level=new boolean[6];
+        boolean[] level=new boolean[5];
         for (int i=0;i<level.length;i++){
             level[i]=false;
         }
