@@ -28,7 +28,6 @@ public class CardsActivity extends AppCompatActivity {
     private RecyclerView viewCartas;
     private LinearLayoutManager linlayoutmanager;
     private ImageView carta1,carta2,carta3,carta4,carta5;
-    private int cartaselect;
     private int idcarta;
     private Personaje p;
 
@@ -156,7 +155,6 @@ public class CardsActivity extends AppCompatActivity {
 
     private void Seleccionar(int i) {
         Carta c=listacartas.get(idcarta);
-        cartaselect=c.getCarta();
         if (i==1) {
             p.setCarta1(c);
         }else if (i==2) {

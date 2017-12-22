@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.DragEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -18,7 +19,6 @@ public class JuegoActivity extends AppCompatActivity {
 
 
     public static String KeyListaPersonajes="key_listaPersonajes";
-    public static String KeyCartasSeleccionadas="key_cartasSeleccionadas";
     public static String KeyListaCartasDistancia="key_cartasDistancia";
     public static String KeyListaCartasCuerpo="key_cartasCuerpo";
     public static String KeyListaCartasEspeciales="key_cartasEspeciales";
@@ -35,7 +35,18 @@ public class JuegoActivity extends AppCompatActivity {
     private ArrayList<Carta> CartasDistancia,CartasCuerpo,CartasEspeciales,CartasOtras;
     private Switch modozombie;
     private boolean intercambiar;
-
+    ArrayList<BARRA> lista;
+    ArrayList<Integer> lista_Draw;
+    ArrayList<Integer> lista_red;
+    RecyclerView recy;
+    Button btn_plus, btn_less;
+    int CONTADOR_VUELTA=0;
+    int numero =1;
+    int numero_less =0;
+    boolean primera_vuelta=false;
+    boolean end= false;
+    boolean btn_mas_pulsado=false;
+    boolean btn_menos_pulsado =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +86,36 @@ public class JuegoActivity extends AppCompatActivity {
         idPersonaje=0;
 
         PersonajeSelec();
+
+        lista =new ArrayList<>();
+        lista_Draw = new ArrayList<>();
+        lista_red =new ArrayList<>();
+
+
+        recy = (RecyclerView) findViewById(R.id.ViewLevel);
+        btn_plus = (Button)findViewById(R.id.BTNmas);
+        btn_less = (Button)findViewById(R.id.BTNmenos);
+
+        recy.setLayoutManager( new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        llenar_DATOS();
+        final AdaptadorBarra adaptarBarra = new AdaptadorBarra(lista);
+        recy.setAdapter(adaptarBarra);
+
+        btn_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Move_plus(adaptarBarra);
+                if (end) btn_plus.setEnabled(false);
+            }
+        });
+
+
+        btn_less.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numero_less>0) move_less(adaptarBarra);
+            }
+        });
 
 
         adapterPersonajes.setOnClickListener(new View.OnClickListener() {
@@ -354,6 +395,208 @@ public class JuegoActivity extends AppCompatActivity {
         }
     }
 
+    private void llenar_DATOS(){
+
+        lista_Draw.add(R.drawable.level_43);
+        lista_Draw.add(R.drawable.level_42);
+        lista_Draw.add(R.drawable.level_41);
+        lista_Draw.add(R.drawable.level_40);
+        lista_Draw.add(R.drawable.level_39);
+        lista_Draw.add(R.drawable.level_38);
+        lista_Draw.add(R.drawable.level_37);
+        lista_Draw.add(R.drawable.level_36);
+        lista_Draw.add(R.drawable.level_35);
+        lista_Draw.add(R.drawable.level_34);
+        lista_Draw.add(R.drawable.level_33);
+        lista_Draw.add(R.drawable.level_32);
+        lista_Draw.add(R.drawable.level_31);
+        lista_Draw.add(R.drawable.level_30);
+        lista_Draw.add(R.drawable.level_29);
+        lista_Draw.add(R.drawable.level_28);
+        lista_Draw.add(R.drawable.level_27);
+        lista_Draw.add(R.drawable.level_26);
+        lista_Draw.add(R.drawable.level_25);
+        lista_Draw.add(R.drawable.level_24);
+        lista_Draw.add(R.drawable.level_23);
+        lista_Draw.add(R.drawable.level_22);
+        lista_Draw.add(R.drawable.level_21);
+        lista_Draw.add(R.drawable.level_20);
+        lista_Draw.add(R.drawable.level_19);
+        lista_Draw.add(R.drawable.level_18);
+        lista_Draw.add(R.drawable.level_17);
+        lista_Draw.add(R.drawable.level_16);
+        lista_Draw.add(R.drawable.level_15);
+        lista_Draw.add(R.drawable.level_14);
+        lista_Draw.add(R.drawable.level_13);
+        lista_Draw.add(R.drawable.level_12);
+        lista_Draw.add(R.drawable.level_11);
+        lista_Draw.add(R.drawable.level_10);
+        lista_Draw.add(R.drawable.level_9);
+        lista_Draw.add(R.drawable.level_8);
+        lista_Draw.add(R.drawable.level_7);
+        lista_Draw.add(R.drawable.level_6);
+        lista_Draw.add(R.drawable.level_5);
+        lista_Draw.add(R.drawable.level_4);
+        lista_Draw.add(R.drawable.level_3);
+        lista_Draw.add(R.drawable.level_2);
+        lista_Draw.add(R.drawable.level_1);
+        lista_Draw.add(R.drawable.level_0);
+
+        lista_red.add(R.drawable.red_0);
+        lista_red.add(R.drawable.red_1);
+        lista_red.add(R.drawable.red_2);
+        lista_red.add(R.drawable.red_3);
+        lista_red.add(R.drawable.red_4);
+        lista_red.add(R.drawable.red_5);
+        lista_red.add(R.drawable.red_6);
+        lista_red.add(R.drawable.red_7);
+        lista_red.add(R.drawable.red_8);
+        lista_red.add(R.drawable.red_9);
+        lista_red.add(R.drawable.red_10);
+        lista_red.add(R.drawable.red_11);
+        lista_red.add(R.drawable.red_12);
+        lista_red.add(R.drawable.red_13);
+        lista_red.add(R.drawable.red_14);
+        lista_red.add(R.drawable.red_15);
+        lista_red.add(R.drawable.red_16);
+        lista_red.add(R.drawable.red_17);
+        lista_red.add(R.drawable.red_18);
+        lista_red.add(R.drawable.red_19);
+        lista_red.add(R.drawable.red_20);
+        lista_red.add(R.drawable.red_21);
+        lista_red.add(R.drawable.red_22);
+        lista_red.add(R.drawable.red_23);
+        lista_red.add(R.drawable.red_24);
+        lista_red.add(R.drawable.red_25);
+        lista_red.add(R.drawable.red_26);
+        lista_red.add(R.drawable.red_27);
+        lista_red.add(R.drawable.red_28);
+        lista_red.add(R.drawable.red_29);
+        lista_red.add(R.drawable.red_30);
+        lista_red.add(R.drawable.red_31);
+        lista_red.add(R.drawable.red_32);
+        lista_red.add(R.drawable.red_33);
+        lista_red.add(R.drawable.red_34);
+        lista_red.add(R.drawable.red_35);
+        lista_red.add(R.drawable.red_36);
+        lista_red.add(R.drawable.red_37);
+        lista_red.add(R.drawable.red_38);
+        lista_red.add(R.drawable.red_39);
+        lista_red.add(R.drawable.red_40);
+        lista_red.add(R.drawable.red_41);
+        lista_red.add(R.drawable.red_42);
+        lista_red.add(R.drawable.red_43);
+        lista.add(new BARRA(R.drawable.puntero,R.drawable.red_0));
+        lista.add(new BARRA(R.drawable.level_1));
+        lista.add(new BARRA(R.drawable.level_2));
+        lista.add(new BARRA(R.drawable.level_3));
+        lista.add(new BARRA(R.drawable.level_4));
+        lista.add(new BARRA(R.drawable.level_5));
+        lista.add(new BARRA(R.drawable.level_6));
+        lista.add(new BARRA(R.drawable.level_7));
+        lista.add(new BARRA(R.drawable.level_8));
+        lista.add(new BARRA(R.drawable.level_9));
+        lista.add(new BARRA(R.drawable.level_10));
+        lista.add(new BARRA(R.drawable.level_11));
+        lista.add(new BARRA(R.drawable.level_12));
+        lista.add(new BARRA(R.drawable.level_13));
+        lista.add(new BARRA(R.drawable.level_14));
+        lista.add(new BARRA(R.drawable.level_15));
+        lista.add(new BARRA(R.drawable.level_16));
+        lista.add(new BARRA(R.drawable.level_17));
+        lista.add(new BARRA(R.drawable.level_18));
+        lista.add(new BARRA(R.drawable.level_19));
+        lista.add(new BARRA(R.drawable.level_20));
+        lista.add(new BARRA(R.drawable.level_21));
+        lista.add(new BARRA(R.drawable.level_22));
+        lista.add(new BARRA(R.drawable.level_23));
+        lista.add(new BARRA(R.drawable.level_24));
+        lista.add(new BARRA(R.drawable.level_25));
+        lista.add(new BARRA(R.drawable.level_26));
+        lista.add(new BARRA(R.drawable.level_27));
+        lista.add(new BARRA(R.drawable.level_28));
+        lista.add(new BARRA(R.drawable.level_29));
+        lista.add(new BARRA(R.drawable.level_30));
+        lista.add(new BARRA(R.drawable.level_31));
+        lista.add(new BARRA(R.drawable.level_32));
+        lista.add(new BARRA(R.drawable.level_33));
+        lista.add(new BARRA(R.drawable.level_34));
+        lista.add(new BARRA(R.drawable.level_35));
+        lista.add(new BARRA(R.drawable.level_36));
+        lista.add(new BARRA(R.drawable.level_37));
+        lista.add(new BARRA(R.drawable.level_38));
+        lista.add(new BARRA(R.drawable.level_39));
+        lista.add(new BARRA(R.drawable.level_40));
+        lista.add(new BARRA(R.drawable.level_41));
+        lista.add(new BARRA(R.drawable.level_42));
+        lista.add(new BARRA(R.drawable.level_43));
+
+    }
+    private void move_less(AdaptadorBarra adaptarBarra) {
+
+        if(btn_mas_pulsado&&!primera_vuelta) numero_less =numero-1;
+        if (primera_vuelta){
+            numero_less = 43;
+            primera_vuelta=false;
+            CONTADOR_VUELTA --;
+        }
+        if(end) {numero_less=43;end =false;}
+
+        if(numero_less==43){
+            lista.set(43,new BARRA(lista_red.get(43)));
+            lista.set(42,new BARRA(R.drawable.puntero,lista_red.get(42)));
+            btn_plus.setEnabled(true);
+            primera_vuelta = false;
+            numero_less = 42;
+            numero =43;
+        }
+
+        else if (numero_less>0){
+            lista.set(numero_less,new BARRA(lista_red.get(numero_less)));
+            lista.set(numero_less-1,new BARRA(R.drawable.puntero,lista_red.get(numero_less-1)));
+            btn_plus.setEnabled(true);
+            numero_less--;
+        }
+
+        btn_menos_pulsado = true;
+        btn_mas_pulsado =false;
+        adaptarBarra.notifyDataSetChanged();
+    }
+    private void Move_plus(AdaptadorBarra adaptarBarra) {
+
+
+        if (!primera_vuelta) {
+            if(btn_menos_pulsado) numero =numero_less +1;
+            lista.set(numero - 1, new BARRA(lista_red.get(numero - 1)));
+            lista.set(numero, new BARRA(R.drawable.puntero, lista_red.get(numero)));
+
+            if (numero < 43){
+                numero++;numero_less++;
+            }else {
+                if (CONTADOR_VUELTA < 1) {
+                    numero = 1;
+                    CONTADOR_VUELTA++;
+                    primera_vuelta = true;
+
+                } else {
+
+                    end = true;}
+            }
+
+
+        }else{
+            lista.set(43, new BARRA(lista_red.get(43)));
+            lista.set(0, new BARRA(R.drawable.puntero, lista_red.get(0)));
+
+            primera_vuelta = false;
+            numero_less =0;
+
+        }
+
+        btn_mas_pulsado =true;
+        btn_menos_pulsado = false;
+        adaptarBarra.notifyDataSetChanged();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
