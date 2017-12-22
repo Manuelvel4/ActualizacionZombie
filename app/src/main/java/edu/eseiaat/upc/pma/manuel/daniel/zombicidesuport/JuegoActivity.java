@@ -85,14 +85,9 @@ public class JuegoActivity extends AppCompatActivity {
                 if (intercambiar){
                     intercambiar=false;
                     idPersonajeInt=viewPersonajes.getChildAdapterPosition(view);
+                    viewPersonajes.setBackgroundColor(getColor(android.R.color.transparent));
                     if (idPersonaje!=idPersonajeInt){
-                       /* Intent intent=new Intent(JuegoActivity.this,IntercambioActivity.class);
-                        Personaje p=listaPersonajes.get(idPersonaje);
-                        intent.putExtra(IntercambioActivity.KeyPersonaje,p);
-                        Personaje q=listaPersonajesSelec.get(idPersonajeInt);
-                        String[] pasocartas2=q.getCartas();
-                        intent.putExtra(IntercambioActivity.Keycartas2,pasocartas2);
-                        startActivityForResult(intent,IntercambioActivity.pasarcartas);*/
+                        IntercambiarCartas();
                     }
 
                 }else{
@@ -386,6 +381,16 @@ public class JuegoActivity extends AppCompatActivity {
                 SeleccionarCarta();
             }
         });
+    }
+
+    private void IntercambiarCartas() {
+        Intent intent=new Intent(JuegoActivity.this,IntercambioActivity.class);
+        Personaje p=listaPersonajes.get(idPersonaje);
+        Personaje q=listaPersonajes.get(idPersonajeInt);
+
+        intent.putExtra(IntercambioActivity.Keycartas,p);
+        intent.putExtra(IntercambioActivity.Keycartas2,q);
+        startActivityForResult(intent,IntercambioActivity.pasarcartas);
     }
 
     private void ResetDrop() {

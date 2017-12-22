@@ -11,7 +11,7 @@ public class Personaje implements Serializable {
     public int foto,cara;
     public String habAzulZ, habAmarillaZ, habNaranja1Z,habNaranja2Z, habRoja1Z,HabRoja2Z,habRoja3Z;
     public int fotoZ,caraZ;
-    public Carta carta1,carta2,carta3,carta4,carta5;
+    public Carta[] cartas;
     public boolean invisible,modozombie;
     public boolean[] level;
     public int puntuacion;
@@ -36,11 +36,12 @@ public class Personaje implements Serializable {
         this.habRoja3Z = habRoja3Z;
         this.fotoZ = fotoZ;
         this.caraZ = caraZ;
-        this.carta1 = carta1;
-        this.carta2 = carta2;
-        this.carta3 = carta3;
-        this.carta4 = carta4;
-        this.carta5 = carta5;
+        this.cartas = new Carta[5];
+        cartas[0] = carta1;
+        cartas[1] = carta2;
+        cartas[2] = carta3;
+        cartas[3] = carta4;
+        cartas[4] = carta5;
         this.invisible = invisible;
         this.modozombie = modozombie;
         this.level = level;
@@ -131,44 +132,50 @@ public class Personaje implements Serializable {
         return caraZ;
     }
 
+    public Carta getCarta(int i) {
+        return cartas[i];
+    }
+    public Carta setCarta(int i) {
+
+    }
     public Carta getCarta1() {
-        return carta1;
+        return cartas[0];
     }
 
     public void setCarta1(Carta carta1) {
-        this.carta1 = carta1;
+        this.cartas[0] = carta1;
     }
 
     public Carta getCarta2() {
-        return carta2;
+        return cartas[1];
     }
 
     public void setCarta2(Carta carta2) {
-        this.carta2 = carta2;
+        this.cartas[1] = carta2;
     }
 
     public Carta getCarta3() {
-        return carta3;
+        return cartas[2];
     }
 
     public void setCarta3(Carta carta3) {
-        this.carta3 = carta3;
+        this.cartas[2] = carta3;
     }
 
     public Carta getCarta4() {
-        return carta4;
+        return cartas[3];
     }
 
     public void setCarta4(Carta carta4) {
-        this.carta4 = carta4;
+        this.cartas[3] = carta4;
     }
 
     public Carta getCarta5() {
-        return carta5;
+        return cartas[4];
     }
 
     public void setCarta5(Carta carta5) {
-        this.carta5 = carta5;
+        this.cartas[4] = carta5;
     }
 
     public boolean isInvisible() {
@@ -193,6 +200,10 @@ public class Personaje implements Serializable {
 
     public void setLevel(boolean[] level) {
         this.level = level;
+    }
+
+    public void intercambiar(Personaje p, int c1,int c2){
+        Carta aux=this.get
     }
 }
 
