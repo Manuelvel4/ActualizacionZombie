@@ -82,24 +82,23 @@ public class JuegoActivity extends AppCompatActivity {
         adapterPersonajes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if (intercambiar){
+                if (intercambiar){
                     intercambiar=false;
                     idPersonajeInt=viewPersonajes.getChildAdapterPosition(view);
                     if (idPersonaje!=idPersonajeInt){
-                        Intent intent=new Intent(JuegoActivity.this,IntercambioActivity.class);
-                        Personaje p=listaPersonajesSelec.get(idPersonaje);
-                        String[] pasocartas=p.getCartas();
-                        intent.putExtra(IntercambioActivity.KeyPersonaje,pasocartas);
+                       /* Intent intent=new Intent(JuegoActivity.this,IntercambioActivity.class);
+                        Personaje p=listaPersonajes.get(idPersonaje);
+                        intent.putExtra(IntercambioActivity.KeyPersonaje,p);
                         Personaje q=listaPersonajesSelec.get(idPersonajeInt);
                         String[] pasocartas2=q.getCartas();
                         intent.putExtra(IntercambioActivity.Keycartas2,pasocartas2);
-                        startActivityForResult(intent,IntercambioActivity.pasarcartas);
+                        startActivityForResult(intent,IntercambioActivity.pasarcartas);*/
                     }
 
-                }else{*/
+                }else{
                     idPersonaje=viewPersonajes.getChildAdapterPosition(view);
                     PersonajeSelec();
-                //}
+                }
 
             }
         });
@@ -487,8 +486,8 @@ public class JuegoActivity extends AppCompatActivity {
 
     }
 
-   /* public void Intercambiar(View view) {
+   public void Intercambiar(View view) {
         viewPersonajes.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         intercambiar=true;
-    }*/
+    }
 }

@@ -158,15 +158,15 @@ public class CardsActivity extends AppCompatActivity {
         Carta c=listacartas.get(idcarta);
         cartaselect=c.getCarta();
         if (i==1) {
-            p.carta1.setCarta(cartaselect);
+            p.setCarta1(c);
         }else if (i==2) {
-            p.carta2.setCarta(cartaselect);
+            p.setCarta2(c);
         }else if (i==3) {
-            p.carta3.setCarta(cartaselect);
+            p.setCarta3(c);
         }else if (i==4) {
-            p.carta4.setCarta(cartaselect);
+            p.setCarta4(c);
         }else if (i==5) {
-            p.carta5.setCarta(cartaselect);
+            p.setCarta5(c);
         }
 
         Mostrar();
@@ -233,7 +233,7 @@ public class CardsActivity extends AppCompatActivity {
 
     public void Aceptar(View view) {
         Intent data=new Intent();
-        data.putExtra(JuegoActivity.KeyCartasSeleccionadas,p);
+        data.putExtra(KeyPersonaje,p);
         setResult(RESULT_OK,data);
         finish();
     }
