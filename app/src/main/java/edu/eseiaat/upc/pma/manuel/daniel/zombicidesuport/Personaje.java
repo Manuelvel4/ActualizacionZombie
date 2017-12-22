@@ -135,9 +135,11 @@ public class Personaje implements Serializable {
     public Carta getCarta(int i) {
         return cartas[i];
     }
-    public Carta setCarta(int i) {
 
+    public Carta setCarta(int i,Carta carta) {
+        return this.cartas[i]=carta;
     }
+
     public Carta getCarta1() {
         return cartas[0];
     }
@@ -203,7 +205,9 @@ public class Personaje implements Serializable {
     }
 
     public void intercambiar(Personaje p, int c1,int c2){
-        Carta aux=this.get
+        Carta aux=p.getCarta(c1);
+        p.setCarta(c1,this.getCarta(c2));
+        this.setCarta(c2,aux);
     }
 }
 

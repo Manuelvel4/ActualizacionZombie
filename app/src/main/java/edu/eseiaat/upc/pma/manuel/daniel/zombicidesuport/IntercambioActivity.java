@@ -1,6 +1,7 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -8,21 +9,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class IntercambioActivity extends AppCompatActivity {
     public static String Keycartas="key_cartas";
     public static String Keycartas2="key_cartas2";
     public static int pasarcartas=2;
-    private Personaje p,q;
+    private Personaje p1, p2;
 
-    private ArrayList<Carta> listacartas;
-    private ArrayList<Carta> CartasDistancia,CartasCuerpo,CartasEspeciales,CartasOtras;
     private ImageView carta11,carta12,carta13,carta14,carta15,carta21,carta22,carta23,carta24,carta25;
     private TextView nombrep,nombreq;
-    private boolean[] dropp,dropq;
-    private int cartap,cartaq;
-    private Carta c;
+    private int c1,c2;
+    boolean p1drag,p1drop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +36,15 @@ public class IntercambioActivity extends AppCompatActivity {
         carta25=(ImageView)findViewById(R.id.carta25);
         nombrep=(TextView)findViewById(R.id.nombre1);
         nombreq=(TextView)findViewById(R.id.nombre2);
-        p= (Personaje) getIntent().getSerializableExtra(Keycartas);
-        q= (Personaje) getIntent().getSerializableExtra(Keycartas2);
-        dropp =new boolean[5];
-        dropq=new boolean[5];
+        p1 = (Personaje) getIntent().getSerializableExtra(Keycartas);
+        p2 = (Personaje) getIntent().getSerializableExtra(Keycartas2);
         Mostrar();
 
         carta11.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropp[0]=true;
-                cartap=1;
-                c.setCarta(p.getCarta1().getCarta());
+                p1drag =true;
+                c1=0;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -65,30 +58,9 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[0]=p.getCarta1();
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta1=c[1];
-                            p.carta2=c[0];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta1=c[2];
-                            p.carta3=c[0];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta1=c[3];
-                            p.carta4=c[0];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta1=c[4];
-                            p.carta5=c[0];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=0;
+                        p1drop=true;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -99,9 +71,8 @@ public class IntercambioActivity extends AppCompatActivity {
         carta12.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropp[1]=true;
-                cartap=2;
-                c.setCarta(p.getCarta2().getCarta());
+                p1drag =true;
+                c1=1;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -115,30 +86,9 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[1]=p.getCarta2();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta2=c[0];
-                            p.carta1=c[1];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta2=c[2];
-                            p.carta3=c[1];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta2=c[3];
-                            p.carta4=c[1];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta2=c[4];
-                            p.carta5=c[1];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=1;
+                        p1drop=true;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -149,9 +99,8 @@ public class IntercambioActivity extends AppCompatActivity {
         carta13.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropp[2]=true;
-                cartap=3;
-                c.setCarta(p.getCarta3().getCarta());
+                p1drag =true;
+                c1=2;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -165,30 +114,9 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[2]=p.getCarta3();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta3=c[0];
-                            p.carta1=c[2];
-                        }
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta3=c[1];
-                            p.carta2=c[2];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta3=c[3];
-                            p.carta4=c[2];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta3=c[4];
-                            p.carta5=c[2];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=2;
+                        p1drop=true;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -199,9 +127,8 @@ public class IntercambioActivity extends AppCompatActivity {
         carta14.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropp[3]=true;
-                cartap=4;
-                c.setCarta(p.getCarta4().getCarta());
+                p1drag =true;
+                c1=3;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -215,30 +142,9 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[3]=p.getCarta4();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta4=c[0];
-                            p.carta1=c[3];
-                        }
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta4=c[1];
-                            p.carta2=c[3];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta4=c[2];
-                            p.carta3=c[3];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta4=c[4];
-                            p.carta5=c[3];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=3;
+                        p1drop=true;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -249,9 +155,8 @@ public class IntercambioActivity extends AppCompatActivity {
         carta15.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropp[4]=true;
-                cartap=5;
-                c.setCarta(p.getCarta5().getCarta());
+                p1drag =true;
+                c1=4;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -265,30 +170,9 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[4]=p.getCarta5();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta5=c[0];
-                            p.carta1=c[4];
-                        }
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta5=c[1];
-                            p.carta2=c[4];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta5=c[2];
-                            p.carta3=c[4];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta5=c[3];
-                            p.carta4=c[4];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=4;
+                        p1drop=true;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -299,9 +183,7 @@ public class IntercambioActivity extends AppCompatActivity {
         carta21.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropq[0]=true;
-                cartaq=1;
-                c.setCarta(q.getCarta1().getCarta());
+                c1=0;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -315,30 +197,8 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[0]=q.getCarta1();
-                        if (dropp[1]){
-                            c[1]=q.getCarta2();
-                            q.carta1=c[1];
-                            q.carta2=c[0];
-                        }
-                        if (dropq[2]){
-                            c[2]=q.getCarta3();
-                            q.carta1=c[2];
-                            q.carta3=c[0];
-                        }
-                        if (dropq[3]){
-                            c[3]=q.getCarta4();
-                            q.carta1=c[3];
-                            q.carta4=c[0];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta1=c[4];
-                            p.carta5=c[0];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=0;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -349,9 +209,7 @@ public class IntercambioActivity extends AppCompatActivity {
         carta22.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropq[1]=true;
-                cartaq=2;c.setCarta(q.getCarta2().getCarta());
-
+                c1=1;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -365,30 +223,8 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[1]=q.getCarta2();
-                        if (dropp[0]){
-                            c[0]=q.getCarta1();
-                            p.carta2=c[0];
-                            p.carta1=c[1];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta2=c[2];
-                            p.carta3=c[1];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta2=c[3];
-                            p.carta4=c[1];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta2=c[4];
-                            p.carta5=c[1];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=1;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -399,9 +235,7 @@ public class IntercambioActivity extends AppCompatActivity {
         carta23.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropq[2]=true;
-                cartaq=3;
-                c.setCarta(q.getCarta3().getCarta());
+                c1=2;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -415,30 +249,8 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[2]=p.getCarta3();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta3=c[0];
-                            p.carta1=c[2];
-                        }
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta3=c[1];
-                            p.carta2=c[2];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta3=c[3];
-                            p.carta4=c[2];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta3=c[4];
-                            p.carta5=c[2];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=2;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -449,9 +261,7 @@ public class IntercambioActivity extends AppCompatActivity {
         carta24.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropq[3]=true;
-                cartaq=4;
-                c.setCarta(q.getCarta4().getCarta());
+                c1=3;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -465,30 +275,8 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[3]=p.getCarta4();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta4=c[0];
-                            p.carta1=c[3];
-                        }
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta4=c[1];
-                            p.carta2=c[3];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta4=c[2];
-                            p.carta3=c[3];
-                        }
-                        if (dropp[4]){
-                            c[4]=p.getCarta5();
-                            p.carta4=c[4];
-                            p.carta5=c[3];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=3;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -499,9 +287,7 @@ public class IntercambioActivity extends AppCompatActivity {
         carta25.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                dropq[4]=true;
-                cartaq=5;
-                c.setCarta(q.getCarta5().getCarta());
+                c1=4;
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
@@ -515,30 +301,8 @@ public class IntercambioActivity extends AppCompatActivity {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DROP:
-                        Carta[] c=new Carta[5];
-                        c[4]=p.getCarta5();
-                        if (dropp[0]){
-                            c[0]=p.getCarta1();
-                            p.carta5=c[0];
-                            p.carta1=c[4];
-                        }
-                        if (dropp[1]){
-                            c[1]=p.getCarta2();
-                            p.carta5=c[1];
-                            p.carta2=c[4];
-                        }
-                        if (dropp[2]){
-                            c[2]=p.getCarta3();
-                            p.carta5=c[2];
-                            p.carta3=c[4];
-                        }
-                        if (dropp[3]){
-                            c[3]=p.getCarta4();
-                            p.carta5=c[3];
-                            p.carta4=c[4];
-                        }
-                        Mostrar();
-                        ResetDrop();
+                        c2=4;
+                        MovimientoCarta();
                         break;
                     default:
                         break;
@@ -547,27 +311,51 @@ public class IntercambioActivity extends AppCompatActivity {
             }
         });
     }
-    private void Mostrar() {
-        nombrep.setText(p.getNombre());
-        carta11.setImageResource(p.getCarta1().getCarta());
-        carta12.setImageResource(p.getCarta2().getCarta());
-        carta13.setImageResource(p.getCarta3().getCarta());
-        carta14.setImageResource(p.getCarta4().getCarta());
-        carta15.setImageResource(p.getCarta5().getCarta());
 
-        nombreq.setText(q.getNombre());
-        carta21.setImageResource(q.getCarta1().getCarta());
-        carta22.setImageResource(q.getCarta2().getCarta());
-        carta23.setImageResource(q.getCarta3().getCarta());
-        carta24.setImageResource(q.getCarta4().getCarta());
-        carta25.setImageResource(q.getCarta5().getCarta());
-    }
-    private void ResetDrop() {
-        for (int i = 0; i< dropp.length; i++){
-            dropp[i]=false;
+    private void MovimientoCarta() {
+        if (p1drop){
+            if (p1drag){
+                p1.intercambiar(p1,c1,c2);
+            }else{
+                p1.intercambiar(p2,c1,c2);
+            }
+        }else{
+            if (p1drag){
+                p2.intercambiar(p1,c1,c2);
+            }else{
+                p2.intercambiar(p2,c1,c2);
+            }
         }
+        p1drop=false;
+        p1drag=false;
+        Mostrar();
     }
-    private void Cambiar() {
-        p.carta1.setCarta();
+
+    private void Mostrar() {
+        nombrep.setText(p1.getNombre());
+        carta11.setImageResource(p1.getCarta1().getCarta());
+        carta12.setImageResource(p1.getCarta2().getCarta());
+        carta13.setImageResource(p1.getCarta3().getCarta());
+        carta14.setImageResource(p1.getCarta4().getCarta());
+        carta15.setImageResource(p1.getCarta5().getCarta());
+
+        nombreq.setText(p2.getNombre());
+        carta21.setImageResource(p2.getCarta1().getCarta());
+        carta22.setImageResource(p2.getCarta2().getCarta());
+        carta23.setImageResource(p2.getCarta3().getCarta());
+        carta24.setImageResource(p2.getCarta4().getCarta());
+        carta25.setImageResource(p2.getCarta5().getCarta());
+    }
+
+    public void Aceptar(View view) {
+        Intent data=new Intent();
+        data.putExtra(Keycartas,p1);
+        data.putExtra(Keycartas2,p2);
+        setResult(RESULT_OK,data);
+        finish();
+    }
+
+    public void Cancelar(View view) {
+        finish();
     }
 }
