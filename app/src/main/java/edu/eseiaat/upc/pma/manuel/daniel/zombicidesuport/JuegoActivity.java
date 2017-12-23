@@ -176,14 +176,50 @@ public class JuegoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Personaje p=listaPersonajes.get(idPersonaje);
                 p.puntuacion++;
+                if (p.puntuacion>43){
+                    p.puntuacion=1;
+                    p.vuelta++;
+                }
                 if (p.puntuacion==19){
-                    p.level[0]=1;
-                    p.level[1]=1;
+                    if (p.vuelta==1){
+                        p.level[0]=1;
+                        p.level[1]=1;
+                    }else if (p.vuelta==2){
+                        if (p.level[0] == 0) {
+                            p.level[0]=2;
+                        }
+                        if (p.level[1] == 0) {
+                            p.level[1]=2;
+                        }
+                    }
+
                 }
                 if (p.puntuacion==43){
-                    p.level[2]=1;
-                    p.level[3]=1;
-                    p.level[4]=1;
+                    if (p.vuelta==1){
+                        p.level[2]=1;
+                        p.level[3]=1;
+                        p.level[4]=1;
+                    }else if (p.vuelta==2){
+                        if (p.level[2] == 0) {
+                            p.level[2]=1;
+                        }
+                        if (p.level[3] == 0) {
+                            p.level[3]=1;
+                        }
+                        if (p.level[4] == 0) {
+                            p.level[4]=1;
+                        }
+                    }else if (p.vuelta==3) {
+                        if (p.level[2] == 0) {
+                            p.level[2] = 2;
+                        }
+                        if (p.level[3] == 0) {
+                            p.level[3] = 2;
+                        }
+                        if (p.level[4] == 0) {
+                            p.level[4] = 2;
+                        }
+                    }
                 }
                 PersonajeSelec();
             }
@@ -461,13 +497,17 @@ public class JuegoActivity extends AppCompatActivity {
             lista.set(i+1, new BARRA(R.drawable.puntero, lista_red.get(i+1)));
         }
         adaptarBarra.notifyDataSetChanged();
+        if (p.vuelta==1){
+            if (p.puntuacion<7){
+                habAmarilla.setBackgroundColor(getColor(android.R.color.white));
 
-        if (p.puntuacion<7){
-            habAmarilla.setBackgroundColor(getColor(android.R.color.white));
-
+            }else{
+                habAmarilla.setBackgroundColor(getColor(R.color.yellow));
+            }
         }else{
             habAmarilla.setBackgroundColor(getColor(R.color.yellow));
         }
+
 
         if (p.level[0]==0) {
             habNaranja1.setBackgroundColor(getColor(android.R.color.white));

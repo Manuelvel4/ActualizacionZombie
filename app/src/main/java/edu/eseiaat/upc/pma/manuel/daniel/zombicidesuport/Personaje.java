@@ -14,9 +14,9 @@ public class Personaje implements Serializable {
     public Carta[] cartas;
     public boolean invisible,modozombie;
     public int[] level;
-    public int puntuacion;
+    public int puntuacion,vuelta;
 
-    public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, int foto, int cara, String habAzulZ, String habAmarillaZ, String habNaranja1Z, String habNaranja2Z, String habRoja1Z, String habRoja2Z, String habRoja3Z, int fotoZ, int caraZ, Carta carta1, Carta carta2, Carta carta3, Carta carta4, Carta carta5, boolean invisible, boolean modozombie, int[] level, int puntuacion) {
+    public Personaje(String nombre, String habAzul, String habAmarilla, String habNaranja1, String habNaranja2, String habRoja1, String habRoja2, String habRoja3, int foto, int cara, String habAzulZ, String habAmarillaZ, String habNaranja1Z, String habNaranja2Z, String habRoja1Z, String habRoja2Z, String habRoja3Z, int fotoZ, int caraZ, Carta carta1, Carta carta2, Carta carta3, Carta carta4, Carta carta5, boolean invisible, boolean modozombie, int[] level, int puntuacion,int vuelta) {
         this.nombre = nombre;
         this.habAzul = habAzul;
         this.habAmarilla = habAmarilla;
@@ -46,6 +46,7 @@ public class Personaje implements Serializable {
         this.modozombie = modozombie;
         this.level = level;
         this.puntuacion = puntuacion;
+        this.vuelta = vuelta;
     }
 
     public int getPuntuacion() {

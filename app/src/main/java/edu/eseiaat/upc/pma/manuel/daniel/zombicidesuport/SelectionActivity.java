@@ -319,9 +319,10 @@ public class SelectionActivity extends AppCompatActivity{
             level[i]=0;
         }
         int puntuacion=0;
+        int vuelta=1;
         watts=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
                 habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ,carta1,carta2,carta3,carta4,carta5,
-                invisible,modozombie,level,puntuacion);
+                invisible,modozombie,level,puntuacion,vuelta);
 
         nombre="Joshua";
         habazul=getString(R.string.Socorrista);
@@ -347,10 +348,9 @@ public class SelectionActivity extends AppCompatActivity{
         carta3=cartamano;
         carta4=cartamano;
         carta5=cartamano;
-        puntuacion=0;
         joshua=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
                 habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ,carta1,carta2,carta3,carta4,carta5,
-                invisible,modozombie,level,puntuacion);
+                invisible,modozombie,level,puntuacion,vuelta);
 
         nombre="Shannon";
         habazul=getString(R.string.DisparoABocajarro);
@@ -376,10 +376,9 @@ public class SelectionActivity extends AppCompatActivity{
         carta3=cartamano;
         carta4=cartamano;
         carta5=cartamano;
-        puntuacion=0;
         shannon=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
                 habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ,carta1,carta2,carta3,carta4,carta5,
-                invisible,modozombie,level,puntuacion);
+                invisible,modozombie,level,puntuacion,vuelta);
 
         nombre="Grindlock";
         habazul=getString(R.string.Provocacion);
@@ -405,10 +404,9 @@ public class SelectionActivity extends AppCompatActivity{
         carta3=cartamano;
         carta4=cartamano;
         carta5=cartamano;
-        puntuacion=0;
         grindlock=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
                 habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ,carta1,carta2,carta3,carta4,carta5,
-                invisible,modozombie,level,puntuacion);
+                invisible,modozombie,level,puntuacion,vuelta);
 
         nombre="Belle";
         habazul=getString(R.string.mas1accionDeMovimientoGratuita);
@@ -434,10 +432,9 @@ public class SelectionActivity extends AppCompatActivity{
         carta3=cartamano;
         carta4=cartamano;
         carta5=cartamano;
-        puntuacion=0;
         belle=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
                 habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ,carta1,carta2,carta3,carta4,carta5,
-                invisible,modozombie,level,puntuacion);
+                invisible,modozombie,level,puntuacion,vuelta);
 
         nombre="Kim";
         habazul=getString(R.string.Afortunada);
@@ -463,10 +460,9 @@ public class SelectionActivity extends AppCompatActivity{
         carta3=cartamano;
         carta4=cartamano;
         carta5=cartamano;
-        puntuacion=0;
         kim=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
                 habazulZ,habamarillaZ,habnaranja1Z,habnaranja2Z,habroja1Z,habroja2Z,habroja3Z,fotoZ,caraZ,carta1,carta2,carta3,carta4,carta5,
-                invisible,modozombie,level,puntuacion);
+                invisible,modozombie,level,puntuacion,vuelta);
     }
     private void CrearListaPersonajes() {
         listaPersonajes=new ArrayList<>();
