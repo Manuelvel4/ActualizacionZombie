@@ -35,18 +35,11 @@ public class JuegoActivity extends AppCompatActivity {
     private ArrayList<Carta> CartasDistancia,CartasCuerpo,CartasEspeciales,CartasOtras;
     private Switch modozombie;
     private boolean intercambiar;
-    ArrayList<BARRA> lista;
-    ArrayList<Integer> lista_Draw;
-    ArrayList<Integer> lista_red;
-    RecyclerView recy;
-    Button btn_plus, btn_less;
-    int CONTADOR_VUELTA=0;
-    int numero =0;
-    int numero_less =0;
-    boolean primera_vuelta=false;
-    boolean end= false;
-    boolean btn_mas_pulsado=false;
-    boolean btn_menos_pulsado =false;
+    private ArrayList<BARRA> lista;
+    private ArrayList<Integer> lista_Draw;
+    private ArrayList<Integer> lista_red;
+    private RecyclerView recy;
+    private Button btn_plus, btn_less;
     private AdaptadorBarra adaptarBarra;
 
     @Override
@@ -110,7 +103,9 @@ public class JuegoActivity extends AppCompatActivity {
                 Personaje p=listaPersonajes.get(idPersonaje);
                 if (p.level[0]==1){
                     p.level[0]=2;
-                    p.level[1]=0;
+                    if (p.level[1]==1){
+                        p.level[1]=0;
+                    }
                 }
                 PersonajeSelec();
             }
@@ -121,7 +116,57 @@ public class JuegoActivity extends AppCompatActivity {
                 Personaje p=listaPersonajes.get(idPersonaje);
                 if (p.level[1]==1){
                     p.level[1]=2;
-                    p.level[0]=0;
+                    if (p.level[0]==1){
+                        p.level[0]=0;
+                    }
+                }
+                PersonajeSelec();
+            }
+        });
+        habRoja1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Personaje p=listaPersonajes.get(idPersonaje);
+                if (p.level[2]==1){
+                    p.level[2]=2;
+                    if (p.level[3]==1){
+                        p.level[3]=0;
+                    }
+                    if (p.level[4]==1){
+                        p.level[4]=0;
+                    }
+                }
+                PersonajeSelec();
+            }
+        });
+        habRoja2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Personaje p=listaPersonajes.get(idPersonaje);
+                if (p.level[3]==1){
+                    p.level[3]=2;
+                    if (p.level[2]==1){
+                        p.level[2]=0;
+                    }
+                    if (p.level[4]==1){
+                        p.level[4]=0;
+                    }
+                }
+                PersonajeSelec();
+            }
+        });
+        habRoja3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Personaje p=listaPersonajes.get(idPersonaje);
+                if (p.level[4]==1){
+                    p.level[4]=2;
+                    if (p.level[2]==1){
+                        p.level[2]=0;
+                    }
+                    if (p.level[3]==1){
+                        p.level[3]=0;
+                    }
                 }
                 PersonajeSelec();
             }
@@ -445,7 +490,7 @@ public class JuegoActivity extends AppCompatActivity {
         } else if (p.level[2] == 1) {
             habRoja1.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         } else if (p.level[2] == 2) {
-            habRoja1.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
+            habRoja1.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
 
         if (p.level[3]==0) {
@@ -453,7 +498,7 @@ public class JuegoActivity extends AppCompatActivity {
         } else if (p.level[3] == 1) {
             habRoja2.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         } else if (p.level[3] == 2) {
-            habRoja2.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
+            habRoja2.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
 
         if (p.level[4]==0) {
@@ -461,7 +506,7 @@ public class JuegoActivity extends AppCompatActivity {
         } else if (p.level[4] == 1) {
             habRoja3.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         } else if (p.level[4] == 2) {
-            habRoja3.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
+            habRoja3.setBackgroundColor(getColor(android.R.color.holo_red_dark));
         }
     }
 
@@ -602,24 +647,7 @@ public class JuegoActivity extends AppCompatActivity {
         lista.add(new BARRA(R.drawable.level_43));
 
     }
-    private void move_less(AdaptadorBarra adaptarBarra) {
-        lista.clear();
-        llenar_DATOS();
-        for (numero=1;numero<20;numero++){
-            lista.set(numero - 1, new BARRA(lista_red.get(numero - 1)));
-            lista.set(numero, new BARRA(R.drawable.puntero, lista_red.get(numero)));
 
-        }
-        adaptarBarra.notifyDataSetChanged();
-    }
-    private void Move_plus(AdaptadorBarra adaptarBarra) {
-        for (numero=1;numero<30;numero++){
-            lista.set(numero - 1, new BARRA(lista_red.get(numero - 1)));
-            lista.set(numero, new BARRA(R.drawable.puntero, lista_red.get(numero)));
-        }
-
-        adaptarBarra.notifyDataSetChanged();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
