@@ -104,12 +104,42 @@ public class JuegoActivity extends AppCompatActivity {
         recy.setAdapter(adaptarBarra);
 
         PersonajeSelec();
-
+        habNaranja1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Personaje p=listaPersonajes.get(idPersonaje);
+                if (p.level[0]==1){
+                    p.level[0]=2;
+                    p.level[1]=0;
+                }
+                PersonajeSelec();
+            }
+        });
+        habNaranja2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Personaje p=listaPersonajes.get(idPersonaje);
+                if (p.level[1]==1){
+                    p.level[1]=2;
+                    p.level[0]=0;
+                }
+                PersonajeSelec();
+            }
+        });
         btn_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Personaje p=listaPersonajes.get(idPersonaje);
                 p.puntuacion++;
+                if (p.puntuacion==19){
+                    p.level[0]=1;
+                    p.level[1]=1;
+                }
+                if (p.puntuacion==43){
+                    p.level[2]=1;
+                    p.level[3]=1;
+                    p.level[4]=1;
+                }
                 PersonajeSelec();
             }
         });
@@ -120,6 +150,15 @@ public class JuegoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Personaje p=listaPersonajes.get(idPersonaje);
                 p.puntuacion--;
+                if (p.puntuacion==18){
+                    p.level[0]=0;
+                    p.level[1]=0;
+                }
+                if (p.puntuacion==42){
+                    p.level[2]=0;
+                    p.level[3]=0;
+                    p.level[4]=0;
+                }
                 PersonajeSelec();
             }
         });
@@ -384,38 +423,45 @@ public class JuegoActivity extends AppCompatActivity {
         }else{
             habAmarilla.setBackgroundColor(getColor(R.color.yellow));
         }
-        if (!p.level[0]){
-            if (p.puntuacion<19){
-                habNaranja1.setBackgroundColor(getColor(android.R.color.white));
-            }else{
-                habNaranja1.setBackgroundColor(getColor(android.R.color.holo_green_dark));
-            }
-        }else{
+
+        if (p.level[0]==0) {
+            habNaranja1.setBackgroundColor(getColor(android.R.color.white));
+        } else if (p.level[0] == 1) {
+            habNaranja1.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+        } else if (p.level[0] == 2) {
             habNaranja1.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
-        if (!p.level[1]){
-            if (p.puntuacion<19){
-                habNaranja2.setBackgroundColor(getColor(android.R.color.white));
-            }else{
-                habNaranja2.setBackgroundColor(getColor(android.R.color.holo_green_dark));
-            }
-        }else {
+
+        if (p.level[1]==0) {
+            habNaranja2.setBackgroundColor(getColor(android.R.color.white));
+        } else if (p.level[1] == 1) {
+            habNaranja2.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+        } else if (p.level[1] == 2) {
             habNaranja2.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
-        if (!p.level[2]){
+
+        if (p.level[2]==0) {
             habRoja1.setBackgroundColor(getColor(android.R.color.white));
-        }else{
-            habRoja1.setBackgroundColor(getColor(android.R.color.holo_red_dark));
+        } else if (p.level[2] == 1) {
+            habRoja1.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+        } else if (p.level[2] == 2) {
+            habRoja1.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
-        if (!p.level[3]){
+
+        if (p.level[3]==0) {
             habRoja2.setBackgroundColor(getColor(android.R.color.white));
-        }else{
-            habRoja2.setBackgroundColor(getColor(android.R.color.holo_red_dark));
+        } else if (p.level[3] == 1) {
+            habRoja2.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+        } else if (p.level[3] == 2) {
+            habRoja2.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
-        if (!p.level[4]){
+
+        if (p.level[4]==0) {
             habRoja3.setBackgroundColor(getColor(android.R.color.white));
-        }else{
-            habRoja3.setBackgroundColor(getColor(android.R.color.holo_red_dark));
+        } else if (p.level[4] == 1) {
+            habRoja3.setBackgroundColor(getColor(android.R.color.holo_green_dark));
+        } else if (p.level[4] == 2) {
+            habRoja3.setBackgroundColor(getColor(android.R.color.holo_orange_dark));
         }
     }
 

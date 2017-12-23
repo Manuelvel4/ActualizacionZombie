@@ -314,9 +314,9 @@ public class SelectionActivity extends AppCompatActivity{
         Carta carta5=cartamano;
         boolean invisible=false;
         boolean modozombie=false;
-        boolean[] level=new boolean[5];
+        int[] level=new int[5];
         for (int i=0;i<level.length;i++){
-            level[i]=false;
+            level[i]=0;
         }
         int puntuacion=0;
         watts=new Personaje(nombre,habazul,habamarilla,habnaranja1,habnaranja2,habroja1,habroja2,habroja3,foto,cara,
