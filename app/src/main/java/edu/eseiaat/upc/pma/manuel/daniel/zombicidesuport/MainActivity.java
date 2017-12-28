@@ -16,7 +16,14 @@ public class MainActivity extends AppCompatActivity {
     public void Crear(View view) {
         Intent intent=new Intent(this,CrearActivity.class);
         startActivity(intent);
+        finish();
+    }
 
+    public void Cargar(View view) {
+        Intent intent=new Intent(this,JuegoActivity.class);
+        boolean cargar=true;
+        intent.putExtra(JuegoActivity.KeyCargar,cargar);
+        startActivity(intent);
         finish();
     }
 }

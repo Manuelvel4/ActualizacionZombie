@@ -55,4 +55,7 @@
     <string name="Personajes">Personajes</string>
     <string name="ModoZombie">Modo zombie</string>
     <string name="PersonajeYaSeleccionado">Este personaje ya se ha seleccionado</string>
+    <string name="NoFile">No hay archivo</string>
+    <string name="NoWrite">No se ha podido esribir en archivo</string>
+    <string name="NoRead">No se ha podido leer</string>
 </resources>

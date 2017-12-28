@@ -47,6 +47,7 @@
         android:layout_alignStart="@+id/button_enter"
         android:background="@drawable/efecto_btn"
         android:fontFamily="cursive"
+        android:onClick="Cargar"
         android:text="@string/Cargar"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"

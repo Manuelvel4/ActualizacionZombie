@@ -1,6 +1,7 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,11 +13,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class JuegoActivity extends AppCompatActivity {
 
+    public static String KeyCargar="key_cargar";
 
     public static String KeyListaPersonajes="key_listaPersonajes";
     public static String KeyListaCartasDistancia="key_cartasDistancia";
@@ -41,7 +53,38 @@ public class JuegoActivity extends AppCompatActivity {
     private RecyclerView recy;
     private Button btn_plus, btn_less;
     private AdaptadorBarra adaptarBarra;
+    private boolean cargar;
 
+
+    private void Writedata(){
+        try {
+            ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream("media.obj"));
+            salida.writeObject(listaPersonajes);
+            salida.close();
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this, R.string.NoFile, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(this, R.string.NoWrite, Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void Readdata(){
+        try {
+            ObjectInputStream entrada=new ObjectInputStream(new FileInputStream("media.obj"));
+            listaPersonajes=((ArrayList<Personaje>) entrada.readObject());
+            entrada.close();
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+            Toast.makeText(this, R.string.NoRead, Toast.LENGTH_SHORT).show();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Writedata();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +104,14 @@ public class JuegoActivity extends AppCompatActivity {
         foto=(ImageView)findViewById(R.id.foto);
         nombre=(TextView)findViewById(R.id.nombre);
         modozombie = (Switch) findViewById(R.id.ModoZombie);
-
+        cargar=getIntent().getBooleanExtra(KeyCargar,false);
         listaPersonajes=new ArrayList<>();
-        listaPersonajes= (ArrayList<Personaje>) getIntent().getSerializableExtra(KeyListaPersonajes);
+        if (!cargar){
+            listaPersonajes= (ArrayList<Personaje>) getIntent().getSerializableExtra(KeyListaPersonajes);
+        }else{
+            Readdata();
+        }
+
         CartasDistancia=new ArrayList<>();
         CartasDistancia=(ArrayList<Carta>)getIntent().getSerializableExtra(KeyListaCartasDistancia);
         CartasCuerpo=new ArrayList<>();
@@ -80,12 +128,9 @@ public class JuegoActivity extends AppCompatActivity {
         viewPersonajes.setAdapter(adapterPersonajes);
         idPersonaje=0;
 
-
-
         lista =new ArrayList<>();
         lista_Draw = new ArrayList<>();
         lista_red =new ArrayList<>();
-
 
         recy = (RecyclerView) findViewById(R.id.ViewLevel);
         btn_plus = (Button)findViewById(R.id.BTNmas);
@@ -175,53 +220,51 @@ public class JuegoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Personaje p=listaPersonajes.get(idPersonaje);
-                p.puntuacion++;
-                if (p.puntuacion>43){
-                    p.puntuacion=1;
-                    p.vuelta++;
-                }
-                if (p.puntuacion==19){
-                    if (p.vuelta==1){
-                        p.level[0]=1;
-                        p.level[1]=1;
-                    }else if (p.vuelta==2){
-                        if (p.level[0] == 0) {
-                            p.level[0]=2;
-                        }
-                        if (p.level[1] == 0) {
-                            p.level[1]=2;
+                if (p.puntuacion != 43) {
+                    p.puntuacion++;
+                    if (p.puntuacion==19){
+                        if (p.vuelta==1){
+                            p.level[0]=1;
+                            p.level[1]=1;
+                        }else if (p.vuelta==2){
+                            if (p.level[0] == 0) {
+                                p.level[0]=2;
+                            }
+                            if (p.level[1] == 0) {
+                                p.level[1]=2;
+                            }
                         }
                     }
-
-                }
-                if (p.puntuacion==43){
-                    if (p.vuelta==1){
-                        p.level[2]=1;
-                        p.level[3]=1;
-                        p.level[4]=1;
-                    }else if (p.vuelta==2){
-                        if (p.level[2] == 0) {
+                    if (p.puntuacion==43){
+                        if (p.vuelta==1){
                             p.level[2]=1;
-                        }
-                        if (p.level[3] == 0) {
                             p.level[3]=1;
-                        }
-                        if (p.level[4] == 0) {
                             p.level[4]=1;
-                        }
-                    }else if (p.vuelta==3) {
-                        if (p.level[2] == 0) {
-                            p.level[2] = 2;
-                        }
-                        if (p.level[3] == 0) {
-                            p.level[3] = 2;
-                        }
-                        if (p.level[4] == 0) {
-                            p.level[4] = 2;
+                        }else if (p.vuelta==2){
+                            if (p.level[2] == 0) {
+                                p.level[2]=1;
+                            }
+                            if (p.level[3] == 0) {
+                                p.level[3]=1;
+                            }
+                            if (p.level[4] == 0) {
+                                p.level[4]=1;
+                            }
+                        }else if (p.vuelta==3) {
+                            if (p.level[2] == 0) {
+                                p.level[2] = 2;
+                            }
+                            if (p.level[3] == 0) {
+                                p.level[3] = 2;
+                            }
+                            if (p.level[4] == 0) {
+                                p.level[4] = 2;
+                            }
                         }
                     }
+                    PersonajeSelec();
                 }
-                PersonajeSelec();
+
             }
         });
 
@@ -230,20 +273,24 @@ public class JuegoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Personaje p=listaPersonajes.get(idPersonaje);
-                p.puntuacion--;
-                if (p.puntuacion==18){
-                    p.level[0]=0;
-                    p.level[1]=0;
+                if (p.puntuacion!=0) {
+                    if (p.puntuacion == 0) {
+                        p.puntuacion = 1;
+                    }
+                    p.puntuacion--;
+                    if (p.puntuacion == 18) {
+                        p.level[0] = 0;
+                        p.level[1] = 0;
+                    }
+                    if (p.puntuacion == 42) {
+                        p.level[2] = 0;
+                        p.level[3] = 0;
+                        p.level[4] = 0;
+                    }
+                    PersonajeSelec();
                 }
-                if (p.puntuacion==42){
-                    p.level[2]=0;
-                    p.level[3]=0;
-                    p.level[4]=0;
-                }
-                PersonajeSelec();
             }
         });
-
 
         adapterPersonajes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,6 +445,16 @@ public class JuegoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Personaje p=listaPersonajes.get(idPersonaje);
                 p.modozombie=!p.modozombie;
+                if (p.puntuacion>18){
+                    p.level[0]=1;
+                    p.level[1]=1;
+                }
+                if (p.puntuacion==43){
+                    p.level[2]=1;
+                    p.level[3]=1;
+                    p.level[4]=1;
+
+                }
                 PersonajeSelec();
                 adapterPersonajes.notifyDataSetChanged();
             }
