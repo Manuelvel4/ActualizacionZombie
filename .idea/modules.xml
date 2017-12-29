@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZombicideSuport.iml" filepath="$PROJECT_DIR$/ZombicideSuport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProyectoAndroidZombicide.iml" filepath="$PROJECT_DIR$/ProyectoAndroidZombicide.iml" />
+      <module fileurl="file://C:\Users\manue\Desktop\proyectoJava\ProyectoAndroidZombicide\ZombicideSuport.iml" filepath="C:\Users\manue\Desktop\proyectoJava\ProyectoAndroidZombicide\ZombicideSuport.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

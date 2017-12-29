@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "755878694656",
+    "firebase_url": "https://zombiecid-2ceb8.firebaseio.com",
+    "project_id": "zombiecid-2ceb8",
+    "storage_bucket": "zombiecid-2ceb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755878694656:android:c70cefb3822a1f58",
+        "android_client_info": {
+          "package_name": "edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755878694656-c4bph8hvr1gfqgdh479j1c5hvoqk72rk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlzyKsszMbJyvDEx9mRhOSGCvFalc5s-Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
