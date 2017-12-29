@@ -1,7 +1,5 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import java.io.Serializable;
 
 /**
@@ -9,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class Carta implements Serializable {
+    
     public int carta;
     public String nombre;
 
