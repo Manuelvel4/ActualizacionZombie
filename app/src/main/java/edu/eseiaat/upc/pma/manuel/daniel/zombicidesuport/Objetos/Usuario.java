@@ -1,36 +1,38 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.Objetos;
 
-import java.util.ArrayList;
-
-import edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.Personaje;
+import java.util.Map;
 
 /**
  * Created by manue on 29/12/2017.
  */
 
 public class Usuario {
-    private  String nombre;
-    private ArrayList<Personaje> list;
+    private Map<String,String> list;
 
-    public Usuario(String nombre, ArrayList<Personaje> list) {
-        this.nombre = nombre;
+    private String nombre_pj;
+
+  public   Usuario(){};
+
+
+    public Usuario(Map<String, String> list,String nombre_pj) {
         this.list = list;
+        this.nombre_pj = nombre_pj;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public ArrayList<Personaje> getList() {
+    public Map<String, String> getList() {
         return list;
     }
 
-    public void setList(ArrayList<Personaje> list) {
+    public void setList(Map<String, String> list) {
         this.list = list;
+    }
+
+    public String getNombre_pj() {
+        return nombre_pj;
+    }
+
+    public void setNombre_pj(String nombre_pj) {
+        this.nombre_pj = nombre_pj;
     }
 }
 

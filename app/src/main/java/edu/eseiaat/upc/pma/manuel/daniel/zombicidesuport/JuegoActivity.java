@@ -1,12 +1,12 @@
 package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +15,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,8 +28,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static android.provider.Telephony.Mms.Part.FILENAME;
+import edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.Objetos.Usuario;
 
 public class JuegoActivity extends AppCompatActivity {
 
@@ -35,9 +43,18 @@ public class JuegoActivity extends AppCompatActivity {
     public static String KeyListaCartasCuerpo="key_cartasCuerpo";
     public static String KeyListaCartasEspeciales="key_cartasEspeciales";
     public static String KeyListaCartasOtras="key_cartasOtras";
+
+
+    public static String keysala="key_sala";
+    public static String keynombre="key_nombre";
+
+    private ArrayList<ArrayList<Personaje>> leer_user;
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
     private ImageView foto;
     private ArrayList<Personaje> listaPersonajes;
+    
+    private ArrayList<Personaje> listaPersonajes2;
+
     private RecyclerView viewPersonajes;
     private LinearLayoutManager linlayoutmanager;
     private PersonajesAdapter adapterPersonajes;
@@ -54,6 +71,15 @@ public class JuegoActivity extends AppCompatActivity {
     private Button btn_plus, btn_less;
     private AdaptadorBarra adaptarBarra;
     private boolean cargar;
+
+
+    //Declaro el firebase
+
+    FirebaseDatabase f = FirebaseDatabase.getInstance();
+
+    private Map<String,String> read;
+
+    List<Usuario> user_list = new ArrayList<>();
 
 
     private void Writedata(){
@@ -743,6 +769,9 @@ public class JuegoActivity extends AppCompatActivity {
         lista.add(new BARRA(R.drawable.level_42));
         lista.add(new BARRA(R.drawable.level_43));
 
+
+        Read_toFirebase();
+
     }
 
 
@@ -788,5 +817,98 @@ public class JuegoActivity extends AppCompatActivity {
    public void Intercambiar(View view) {
         viewPersonajes.setBackgroundColor(getColor(android.R.color.holo_green_dark));
         intercambiar=true;
+
+
     }
+
+
+    public void Read_toFirebase() {
+
+        //declaro los parametros
+        String sala = getIntent().getExtras().getString(keysala);
+        String user= getIntent().getExtras().getString(keynombre);
+
+
+        // declaro la lista de usuarios donde guardare mi usuario
+
+        //Declaro la clase donde tengo el metodo para leer y guardar los datos
+
+
+        //Aplico el metodo para leer los datos
+
+        Read_toFirebase(sala,user,user_list);
+
+
+    }
+    @Override
+
+    public void onStart() {
+
+        super.onStart();
+
+
+    }
+
+
+
+
+
+    public  void  Read_toFirebase(String sala, String user, final List<Usuario> user_list) {
+        // declaro la referencia para la firebase
+
+        DatabaseReference ref;
+
+        ref = f.getReference(sala)
+                .child(user).child("Personajes");
+
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // Get user information
+                Usuario user = new Usuario();
+
+                for (DataSnapshot d : dataSnapshot.getChildren()
+                        ) {
+                    user = d.getValue(Usuario.class);
+                    user_list.add(user);
+                }
+
+
+                String authorName;
+                Map<String, String> a = new HashMap<>();
+
+                a.put(user_list.get(0).getNombre_pj(), user_list.get(0).getList().toString());
+
+                if (user == null) {
+                    authorName = "null";
+                } else authorName = user.getNombre_pj();
+
+
+                Log.i("D", "" + user_list.get(0).getNombre_pj());
+                Log.i("D", "" + user_list.get(1).getNombre_pj());
+                Log.i("D", "" + user_list.get(4).getNombre_pj());
+                Log.i("D", "" + user_list.get(4).getList().get("Level"));
+
+            }
+
+
+            @Override
+
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+
+        });
+
+
+    }
+
+
+
+
 }

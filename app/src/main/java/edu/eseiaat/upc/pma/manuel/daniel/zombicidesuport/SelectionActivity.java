@@ -15,14 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.Objetos.FireBaseMethod;
 import edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport.Objetos.Usuario;
 
 public class SelectionActivity extends AppCompatActivity{
@@ -33,9 +30,8 @@ public class SelectionActivity extends AppCompatActivity{
     private Usuario user;
 
     private Map<String,String> list;
-    private Map<String,Boolean> list_bolean;
-    private Map<String,String> list_int;
-    private Map<String,ArrayList<Carta>> list_carta;
+
+    FireBaseMethod firebase;
 
     private RecyclerView viewPersonajes;
     private List<Personaje> listaPersonajes;
@@ -517,6 +513,7 @@ public class SelectionActivity extends AppCompatActivity{
 
     public void Atras(View view) {
         Intent intent=new Intent(this,CrearActivity.class);
+
         startActivity(intent);
         finish();
     }
@@ -535,107 +532,29 @@ public class SelectionActivity extends AppCompatActivity{
         intent.putExtra(JuegoActivity.KeyListaCartasCuerpo, CartasCuerpo);
         intent.putExtra(JuegoActivity.KeyListaCartasEspeciales,CartasEspeciales);
         intent.putExtra(JuegoActivity.KeyListaCartasOtras, CartasOtras);
+
+        //Guardamos la sala y el nombre para despues recuperarlo a travez de firebase
+        intent.putExtra(JuegoActivity.keysala,getIntent().getExtras().getString(keysala));
+        intent.putExtra(JuegoActivity.keynombre,getIntent().getExtras().getString(keynombre));
+
         startActivity(intent);
         finish();
     }
 
     private void PushFirebase() {
-        list = new HashMap<>();
 
+        String user = getIntent().getExtras().getString(keynombre);
+        String sala = getIntent().getExtras().getString(keysala);
 
-        LlenarMapList(listaPersonajesSelec);
+        firebase = new FireBaseMethod();
 
+        //El metodo necesita la lista de pesonajes que ha usado el usuario, la sala en la que se a creado y el nombre del usuario
 
-        FirebaseDatabase f = FirebaseDatabase.getInstance();
-
-
-        DatabaseReference ref = f.getReference(getIntent().getExtras().getString(keysala));
-        ref.child(getIntent().getExtras().getString(keynombre)).
-                child("Personajes").child(listaPersonajesSelec.get(0).getNombre().toString())
-                .push().setValue(list);
-    }
-
-
-    private void LlenarMapList(ArrayList<Personaje> listaPersonajesSelec) {
-
-
-
-        for (int i = 0; i<listaPersonajesSelec.size();i++) {
-
-            list.put("foto", String.valueOf(this.listaPersonajesSelec.get(i).getFoto()));
-            list.put("cara", String.valueOf(this.listaPersonajesSelec.get(i).getCara()));
-            list.put("fotoZ", String.valueOf(this.listaPersonajesSelec.get(i).getFotoZ()));
-            list.put("caraZ", String.valueOf(this.listaPersonajesSelec.get(i).getCaraZ()));
-
-            list.put("habAzul", this.listaPersonajesSelec.get(i).getHabAzul());
-            list.put("habAmarilla", this.listaPersonajesSelec.get(i).getHabAmarilla());
-            list.put("habNaranja1", this.listaPersonajesSelec.get(i).getHabNaranja1());
-            list.put("habNaranja2", this.listaPersonajesSelec.get(i).getHabNaranja2());
-            list.put("habRoja1", this.listaPersonajesSelec.get(i).getHabRoja1());
-            list.put("HabRoja2", this.listaPersonajesSelec.get(i).getHabRoja2());
-            list.put("habRoja3", this.listaPersonajesSelec.get(i).getHabRoja3());
-
-            list.put("habAzulZ", this.listaPersonajesSelec.get(i).getHabAzulZ());
-            list.put("habAmarillaZ", this.listaPersonajesSelec.get(i).getHabAmarillaZ());
-            list.put("habNaranja1Z", this.listaPersonajesSelec.get(i).getHabNaranja1Z());
-            list.put("habNaranja2Z", this.listaPersonajesSelec.get(i).getHabNaranja2Z());
-            list.put("habRoja3Z", this.listaPersonajesSelec.get(i).getHabRoja3Z());
-
-
-
-            list.put("puntuacion", String.valueOf(this.listaPersonajesSelec.get(i).getPuntuacion()));
-
-            list.put("vuelta", String.valueOf(this.listaPersonajesSelec.get(i).getVuelta()));
-
-
-
-
-            list.put("Carta1_c",String.valueOf(this.listaPersonajesSelec.get(i).getCarta1().getCarta()));
-            list.put("Carta1_n",this.listaPersonajesSelec.get(i).getCarta1().getNombre());
-
-            list.put("Carta2_c",String.valueOf(this.listaPersonajesSelec.get(i).getCarta2().getCarta()));
-            list.put("Carta2_n",this.listaPersonajesSelec.get(i).getCarta2().getNombre());
-
-            list.put("Carta3_c",String.valueOf(this.listaPersonajesSelec.get(i).getCarta3().getCarta()));
-            list.put("Carta3_n",this.listaPersonajesSelec.get(i).getCarta3().getNombre());
-
-            list.put("Carta4_c",String.valueOf(this.listaPersonajesSelec.get(i).getCarta4().getCarta()));
-            list.put("Carta4_n",this.listaPersonajesSelec.get(i).getCarta4().getNombre());
-
-            list.put("Carta5_c",String.valueOf(this.listaPersonajesSelec.get(i).getCarta5().getCarta()));
-            list.put("Carta5_n",this.listaPersonajesSelec.get(i).getCarta5().getNombre());
-
-
-
-            list.put("invisible", String.valueOf(String.valueOf(this.listaPersonajesSelec.get(i).isInvisible())));
-            list.put("modozombie", String.valueOf(this.listaPersonajesSelec.get(i).isModozombie()));
-        }
-
-
-
-        for (int i = 0; i<listaPersonajesSelec.size();i++) {
-
-            int [] l = listaPersonajesSelec.get(i).getLevel();
-
-            for (int j = 0; j<l.length;j++) {
-
-                list.put("Level",String.valueOf(l[j]));
-
-
-            }
-
-            for (int j = 0; j<l.length;j++) {
-
-                list.put(String.valueOf("Level"+j),String.valueOf(l[j]));
-
-
-            }
-
-        }
-
-
+        firebase.WriteToFirebase(listaPersonajesSelec,sala,user);
 
 
     }
+
+
 }
 
