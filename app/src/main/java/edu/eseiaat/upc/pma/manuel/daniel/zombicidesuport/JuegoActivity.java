@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
@@ -47,10 +46,9 @@ public class JuegoActivity extends AppCompatActivity {
     public static String keysala="key_sala";
     public static String keynombre="key_nombre";
 
+    private ArrayList<ArrayList<Personaje>> leer_user;
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
-
     private ImageView foto;
-
     private ArrayList<Personaje> listaPersonajes;
 
     private ArrayList<Personaje> listaPersonajes2;
@@ -115,7 +113,6 @@ public class JuegoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-
         habAzul=(TextView) findViewById(R.id.HabAzul);
         habAmarilla=(TextView)findViewById(R.id.HabAmarilla);
         habNaranja1=(TextView) findViewById(R.id.HabNaranja1);
@@ -131,11 +128,8 @@ public class JuegoActivity extends AppCompatActivity {
         foto=(ImageView)findViewById(R.id.foto);
         nombre=(TextView)findViewById(R.id.nombre);
         modozombie = (Switch) findViewById(R.id.ModoZombie);
-
         cargar=getIntent().getBooleanExtra(KeyCargar,false);
-
         listaPersonajes=new ArrayList<>();
-
         if (!cargar){
             listaPersonajes= (ArrayList<Personaje>) getIntent().getSerializableExtra(KeyListaPersonajes);
         }else{
@@ -172,7 +166,6 @@ public class JuegoActivity extends AppCompatActivity {
         recy.setAdapter(adaptarBarra);
 
         PersonajeSelec();
-
         habNaranja1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -551,11 +544,8 @@ public class JuegoActivity extends AppCompatActivity {
 
 
     private void PersonajeSelec() {
-
         Personaje p = listaPersonajes.get(idPersonaje);
-
         nombre.setText(p.getNombre());
-
         if (p.modozombie) {
             habAzul.setText(p.getHabAzulZ());
             habAmarilla.setText(p.getHabAmarillaZ());
@@ -777,8 +767,6 @@ public class JuegoActivity extends AppCompatActivity {
         lista.add(new BARRA(R.drawable.level_42));
         lista.add(new BARRA(R.drawable.level_43));
 
-
-
     }
 
 
@@ -835,34 +823,6 @@ public class JuegoActivity extends AppCompatActivity {
         String sala = getIntent().getExtras().getString(keysala);
         String user= getIntent().getExtras().getString(keynombre);
 
-
-        // declaro la lista de usuarios donde guardare mi usuario
-
-        //Declaro la clase donde tengo el metodo para leer y guardar los datos
-
-
-        //Aplico el metodo para leer los datos
-
-        Read_toFirebase(sala,user,user_list);
-
-
-    }
-    @Override
-
-    public void onStart() {
-
-        super.onStart();
-
-
-    }
-
-
-
-
-
-    public  void  Read_toFirebase(String sala, String user, final List<Usuario> user_list) {
-        // declaro la referencia para la firebase
-
         DatabaseReference ref;
 
         ref = f.getReference(sala)
@@ -875,25 +835,27 @@ public class JuegoActivity extends AppCompatActivity {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                // Get user information
                 Usuario user = new Usuario();
 
                 for (DataSnapshot d : dataSnapshot.getChildren()
                         ) {
                     user = d.getValue(Usuario.class);
                     user_list.add(user);
+                    // aqui leo todos las listas de Map que tengo en FIrebase
                 }
+
+                //base de datos en tiempo real
+
+                // aki transformo todas las listas de map a lista del objeto personaje
 
                 LLENAR_PJ(user_list);
 
+                // me devuelve la listaPersonajes2 llena;
 
-                // PersonajesAdapter a = new PersonajesAdapter();
-
-
-                Log.i("D", "" + user_list.get(0).getNombre_pj());
-                Log.i("D", "" + user_list.get(1).getNombre_pj());
-                Log.i("D", "" + user_list.get(1).getList().get("Level"));
-
+                listaPersonajes = listaPersonajes2;
+                adapterPersonajes.notifyDataSetChanged();
+                adapterPersonajes =new PersonajesAdapter(listaPersonajes2);
+                viewPersonajes.setAdapter(adapterPersonajes);
 
             }
 
@@ -906,6 +868,7 @@ public class JuegoActivity extends AppCompatActivity {
             }
 
         });
+
 
 
     }
@@ -971,9 +934,6 @@ public class JuegoActivity extends AppCompatActivity {
             listaPersonajes2.add(i, a2);
 
         }
-        adapterPersonajes =new PersonajesAdapter(listaPersonajes2);
-        adapterPersonajes.notifyDataSetChanged();
-        viewPersonajes.setAdapter(adapterPersonajes);
     }
 
 
