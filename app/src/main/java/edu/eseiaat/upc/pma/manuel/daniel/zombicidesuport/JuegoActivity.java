@@ -47,9 +47,10 @@ public class JuegoActivity extends AppCompatActivity {
     public static String keysala="key_sala";
     public static String keynombre="key_nombre";
 
-    private ArrayList<ArrayList<Personaje>> leer_user;
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
+
     private ImageView foto;
+
     private ArrayList<Personaje> listaPersonajes;
 
     private ArrayList<Personaje> listaPersonajes2;
@@ -114,6 +115,7 @@ public class JuegoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
+
         habAzul=(TextView) findViewById(R.id.HabAzul);
         habAmarilla=(TextView)findViewById(R.id.HabAmarilla);
         habNaranja1=(TextView) findViewById(R.id.HabNaranja1);
@@ -129,8 +131,11 @@ public class JuegoActivity extends AppCompatActivity {
         foto=(ImageView)findViewById(R.id.foto);
         nombre=(TextView)findViewById(R.id.nombre);
         modozombie = (Switch) findViewById(R.id.ModoZombie);
+
         cargar=getIntent().getBooleanExtra(KeyCargar,false);
+
         listaPersonajes=new ArrayList<>();
+
         if (!cargar){
             listaPersonajes= (ArrayList<Personaje>) getIntent().getSerializableExtra(KeyListaPersonajes);
         }else{
@@ -167,6 +172,7 @@ public class JuegoActivity extends AppCompatActivity {
         recy.setAdapter(adaptarBarra);
 
         PersonajeSelec();
+
         habNaranja1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -545,8 +551,11 @@ public class JuegoActivity extends AppCompatActivity {
 
 
     private void PersonajeSelec() {
+
         Personaje p = listaPersonajes.get(idPersonaje);
+
         nombre.setText(p.getNombre());
+
         if (p.modozombie) {
             habAzul.setText(p.getHabAzulZ());
             habAmarilla.setText(p.getHabAmarillaZ());
@@ -769,7 +778,6 @@ public class JuegoActivity extends AppCompatActivity {
         lista.add(new BARRA(R.drawable.level_43));
 
 
-        Read_toFirebase();
 
     }
 
