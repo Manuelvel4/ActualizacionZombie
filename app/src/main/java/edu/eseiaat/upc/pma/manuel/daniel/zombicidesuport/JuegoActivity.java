@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +51,7 @@ public class JuegoActivity extends AppCompatActivity {
     private TextView habAzul,habAmarilla, habNaranja1, habNaranja2, habRoja1, habRoja2,habRoja3,nombre;
     private ImageView foto;
     private ArrayList<Personaje> listaPersonajes;
-    
+
     private ArrayList<Personaje> listaPersonajes2;
 
     private RecyclerView viewPersonajes;
@@ -861,7 +860,7 @@ public class JuegoActivity extends AppCompatActivity {
         ref = f.getReference(sala)
                 .child(user).child("Personajes");
 
-
+        listaPersonajes2 =  new ArrayList<>();
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -877,21 +876,16 @@ public class JuegoActivity extends AppCompatActivity {
                     user_list.add(user);
                 }
 
+                LLENAR_PJ(user_list);
 
-                String authorName;
-                Map<String, String> a = new HashMap<>();
 
-                a.put(user_list.get(0).getNombre_pj(), user_list.get(0).getList().toString());
-
-                if (user == null) {
-                    authorName = "null";
-                } else authorName = user.getNombre_pj();
+                // PersonajesAdapter a = new PersonajesAdapter();
 
 
                 Log.i("D", "" + user_list.get(0).getNombre_pj());
                 Log.i("D", "" + user_list.get(1).getNombre_pj());
-                Log.i("D", "" + user_list.get(4).getNombre_pj());
-                Log.i("D", "" + user_list.get(4).getList().get("Level"));
+                Log.i("D", "" + user_list.get(1).getList().get("Level"));
+
 
             }
 
@@ -908,7 +902,71 @@ public class JuegoActivity extends AppCompatActivity {
 
     }
 
+    private void LLENAR_PJ(List<Usuario> user_list) {
+        listaPersonajes2.clear();
+        for (int i=0;i<user_list.size();i++) {
+            String nombre = user_list.get(i).getNombre_pj();
+            int foto = Integer.parseInt(user_list.get(i).getList().get("foto"));
+            int cara = Integer.parseInt(user_list.get(i).getList().get("cara"));
+            int fotoZ = Integer.parseInt(user_list.get(i).getList().get("fotoZ"));
+            int caraZ = Integer.parseInt(user_list.get(i).getList().get("caraZ"));
+            String habAzul = user_list.get(i).getList().get("habAzul");
+            String habAmarilla = user_list.get(i).getList().get("habAmarilla");
+            String habNaranja1 = user_list.get(i).getList().get("habNaranja1");
+            String habNaranja2 = user_list.get(i).getList().get("habNaranja2");
+            String habRoja1 = user_list.get(i).getList().get("habRoja1");
+            String HabRoja2 = user_list.get(i).getList().get("HabRoja2");
+            String habRoja3 = user_list.get(i).getList().get("habRoja3");
+            String habAzulZ = user_list.get(i).getList().get("habAzulZ");
 
+            String habAmarillaZ = user_list.get(i).getList().get("habAmarillaZ");
+            String habNaranja1Z = user_list.get(i).getList().get("habNaranja1Z");
+            String habNaranja2Z = user_list.get(i).getList().get("habNaranja2Z");
+            String habRoja3Z = user_list.get(i).getList().get("habRoja3");
+
+            int puntuacion = Integer.parseInt(user_list.get(i).getList().get("puntuacion"));
+            int vuelta = Integer.parseInt(user_list.get(i).getList().get("vuelta"));
+
+            List<Carta> list_carta = new ArrayList<>();
+            int[] list_level = new int[5];
+
+            list_carta.add(new Carta(Integer.parseInt(user_list.get(i).getList().get("Carta1_c")), user_list.get(i).getList().get("Carta1_n")));
+            list_carta.add(new Carta(Integer.parseInt(user_list.get(i).getList().get("Carta2_c")), user_list.get(i).getList().get("Carta2_n")));
+            list_carta.add(new Carta(Integer.parseInt(user_list.get(i).getList().get("Carta3_c")), user_list.get(i).getList().get("Carta3_n")));
+            list_carta.add(new Carta(Integer.parseInt(user_list.get(i).getList().get("Carta4_c")), user_list.get(i).getList().get("Carta4_n")));
+            list_carta.add(new Carta(Integer.parseInt(user_list.get(i).getList().get("Carta5_c")), user_list.get(i).getList().get("Carta5_n")));
+
+            String invisible = user_list.get(i).getList().get("invisible");
+            String modozombie = user_list.get(i).getList().get("modozombie");
+            boolean invisible_B;
+            boolean modozombie_B;
+
+            if (invisible == "true") invisible_B = true;
+            else invisible_B = false;
+            if (modozombie == "true") modozombie_B = true;
+            else modozombie_B = false;
+
+            list_level[0] = Integer.parseInt(user_list.get(i).getList().get("Level"));
+            list_level[1] = Integer.parseInt(user_list.get(i).getList().get("Level1"));
+            list_level[2] = Integer.parseInt(user_list.get(i).getList().get("Level2"));
+            list_level[3] = Integer.parseInt(user_list.get(i).getList().get("Level3"));
+            list_level[4] = Integer.parseInt(user_list.get(i).getList().get("Level4"));
+
+            Personaje a2 = new Personaje(nombre, habAzul, habAmarilla, habNaranja1, habNaranja2, habRoja1, HabRoja2, habRoja3,
+                    foto, cara, habAzulZ, habAmarillaZ, habNaranja1Z, habNaranja2Z, habNaranja1Z, habNaranja2Z,
+                    habRoja3Z, fotoZ, caraZ, list_carta.get(0),
+                    list_carta.get(1), list_carta.get(2), list_carta.get(3), list_carta.get(4),
+                    invisible_B, modozombie_B, list_level, puntuacion, vuelta);
+
+
+
+            listaPersonajes2.add(i, a2);
+
+        }
+        adapterPersonajes =new PersonajesAdapter(listaPersonajes2);
+        adapterPersonajes.notifyDataSetChanged();
+        viewPersonajes.setAdapter(adapterPersonajes);
+    }
 
 
 }

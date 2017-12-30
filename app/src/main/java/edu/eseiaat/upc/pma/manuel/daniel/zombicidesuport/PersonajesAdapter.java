@@ -2,9 +2,7 @@ package edu.eseiaat.upc.pma.manuel.daniel.zombicidesuport;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +19,9 @@ public class PersonajesAdapter extends RecyclerView.Adapter<PersonajesAdapter.Vi
 
     public PersonajesAdapter(Context c, List<Personaje> list) {
         this.context = c;
+        ListaPersonajes = list;
+    }
+    public PersonajesAdapter(List<Personaje> list) {
         ListaPersonajes = list;
     }
 
